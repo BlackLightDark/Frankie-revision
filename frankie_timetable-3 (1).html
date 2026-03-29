@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frankie's Revision Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f4ef;
+    --surface: #ffffff;
+    --ink: #1a1714;
+    --ink-light: #6b6560;
+    --accent: #c84b2f;
+    --accent-soft: #f2e8e5;
+    --highlight: #f5c842;
+    --highlight-soft: #fdf8e3;
+    --green: #2d7a4f;
+    --green-soft: #e5f2eb;
+    --blue: #2356a8;
+    --blue-soft: #e5ecf7;
+    --border: #e2ddd6;
+    --done-bg: #f0ede8;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--ink);
+    color: white;
+    padding: 28px 32px 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: white;
+  }
+
+  header h1 span {
+    color: var(--highlight);
+    font-style: italic;
+  }
+
+  .header-meta {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    background: rgba(255,255,255,0.15);
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    background: var(--highlight);
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 32px;
+    background: var(--ink);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .tab {
+    padding: 12px 20px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+  }
+
+  .tab:hover { color: rgba(255,255,255,0.8); }
+  .tab.active { color: var(--highlight); border-bottom-color: var(--highlight); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  /* WEEK VIEW */
+  .week-block { margin-bottom: 40px; }
+
+  .week-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .week-label h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+  }
+
+  .week-label .divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .week-label .week-stat {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  .day-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow 0.15s;
+    min-height: 120px;
+  }
+
+  .day-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+  .day-header {
+    padding: 8px 10px 6px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .day-date { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+
+  .day-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    border: 1px solid transparent;
+    user-select: none;
+  }
+
+  .task-item:hover { opacity: 0.85; }
+
+  .task-item.done {
+    opacity: 0.45;
+    text-decoration: line-through;
+  }
+
+  .task-cb {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    font-size: 9px;
+    transition: all 0.15s;
+  }
+
+  .task-item.done .task-cb { background: currentColor; }
+  .task-item.done .task-cb::after { content: '✓'; color: white; font-weight: bold; }
+
+  /* Subject colour coding */
+  .subj-maths    { background: #e8f0fe; color: #1a56db; border-color: #c3d4fa; }
+  .subj-english  { background: #fce8f3; color: #9d174d; border-color: #f8b4d9; }
+  .subj-lit      { background: #fce8f3; color: #9d174d; border-color: #f8b4d9; }
+  .subj-bio      { background: #e5f2eb; color: #1e6b3e; border-color: #a7d7b8; }
+  .subj-chem     { background: #e5f0fa; color: #1c4a8a; border-color: #a9c8ef; }
+  .subj-physics  { background: #e8f7ff; color: #0e5c8a; border-color: #90d2f0; }
+  .subj-history  { background: #fdf0e3; color: #8a4a00; border-color: #f5c88a; }
+  .subj-geog     { background: #e5f7f0; color: #1a6b50; border-color: #8ad4b8; }
+  .subj-art      { background: #f5e8ff; color: #6a1e9e; border-color: #d4a8f5; }
+  .subj-music    { background: #fdf5e8; color: #7a4e00; border-color: #f5d498; }
+  .subj-macbeth  { background: #fce8f3; color: #9d174d; border-color: #f8b4d9; }
+  .subj-default  { background: #f5f5f5; color: #444; border-color: #ddd; }
+
+  /* Special events */
+  .task-item.event-special {
+    background: var(--highlight-soft) !important;
+    border-color: var(--highlight) !important;
+    color: #7a5800 !important;
+    font-weight: 600;
+  }
+
+  .task-item.event-school {
+    background: #e8f0fe !important;
+    border-color: #6c8ede !important;
+    color: #1a3a8a !important;
+    font-weight: 600;
+  }
+
+  .empty-day { display: flex; align-items: center; justify-content: center; height: 60px; }
+  .empty-day span { font-size: 0.7rem; color: var(--border); letter-spacing: 0.05em; }
+
+  /* EXAM LIST VIEW */
+  .exam-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  @media (max-width: 700px) {
+    .exam-lists { grid-template-columns: 1fr; }
+    .days-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .exam-list-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .exam-list-header {
+    padding: 14px 18px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .exam-list-header .badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .badge-before { background: var(--accent-soft); color: var(--accent); }
+  .badge-after  { background: var(--blue-soft); color: var(--blue); }
+
+  .exam-list-body { padding: 12px 18px; }
+
+  .exam-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .exam-row:last-child { border-bottom: none; }
+  .exam-row:hover { opacity: 0.7; }
+  .exam-row.done { opacity: 0.4; }
+  .exam-row.done .exam-name { text-decoration: line-through; }
+
+  .exam-num {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .exam-row.done .exam-num { background: var(--green); }
+
+  .exam-name { font-size: 0.88rem; flex: 1; }
+
+  .exam-tick {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+
+  .exam-row.done .exam-tick {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--ink-light);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  /* Tab panels */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+
+  .stat-chip {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .stat-chip .val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .stat-chip .lbl {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  .today-marker .day-header {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  .today-marker .day-date { color: var(--highlight); }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-meta">GCSE Revision · May 2025</div>
+    <h1>Frankie's <span>Revision</span></h1>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="progress-text">0 tasks done</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('timetable')">Timetable</div>
+  <div class="tab" onclick="switchTab('exams')">Exam Priority</div>
+</div>
+
+<div class="container">
+
+  <!-- TIMETABLE PANEL -->
+  <div class="panel active" id="panel-timetable">
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot subj-maths"></div> Maths</div>
+      <div class="legend-item"><div class="legend-dot subj-lit"></div> English/Lit</div>
+      <div class="legend-item"><div class="legend-dot subj-bio"></div> Biology</div>
+      <div class="legend-item"><div class="legend-dot subj-chem"></div> Chemistry</div>
+      <div class="legend-item"><div class="legend-dot subj-physics"></div> Physics</div>
+      <div class="legend-item"><div class="legend-dot subj-history"></div> History</div>
+      <div class="legend-item"><div class="legend-dot subj-geog"></div> Geography</div>
+      <div class="legend-item"><div class="legend-dot subj-art"></div> Art</div>
+      <div class="legend-item"><div class="legend-dot subj-music"></div> Music</div>
+    </div>
+
+    <div id="weeks-container"></div>
+
+  </div>
+
+  <!-- EXAM PRIORITY PANEL -->
+  <div class="panel" id="panel-exams">
+    <div class="exam-lists" id="exam-lists-container"></div>
+  </div>
+
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+
+const weeks = [
+  {
+    label: "Week 1 · 30th – 5th",
+    days: [
+      { day: "Mon", date: "30th", tasks: [
+        { text: "After school Maths", subj: "maths", special: "school" }
+      ]},
+      { day: "Tue", date: "31st", tasks: [
+        { text: "After school Art", subj: "art", special: "school" }
+      ]},
+      { day: "Wed", date: "1st", tasks: [
+        { text: "Macbeth quotes revision", subj: "macbeth" }
+      ]},
+      { day: "Thu", date: "2nd", tasks: [
+        { text: "Art (in school)", subj: "art", special: "school" }
+      ]},
+      { day: "Fri", date: "3rd", tasks: [
+        { text: "Macbeth with Mum", subj: "macbeth", special: "special" }
+      ]},
+      { day: "Sat", date: "4th", tasks: [
+        { text: "Biology Paper 1 flashcards", subj: "bio" }
+      ]},
+      { day: "Sun", date: "5th", tasks: [
+        { text: "Biology Paper 1 sit paper", subj: "bio" },
+        { text: "Flashcards for poetry", subj: "lit" }
+      ]},
+    ]
+  },
+  {
+    label: "Week 2 · 6th – 12th",
+    days: [
+      { day: "Mon", date: "6th", tasks: [
+        { text: "English Lit Paper 1 – Poetry anthology practice question", subj: "lit" }
+      ]},
+      { day: "Tue", date: "7th", tasks: [
+        { text: "Geography Paper 1 revision", subj: "geog" },
+        { text: "Haircut", subj: "default", special: "special" }
+      ]},
+      { day: "Wed", date: "8th", tasks: [
+        { text: "Geography – complete practice paper", subj: "geog" },
+        { text: "Art", subj: "art" }
+      ]},
+      { day: "Thu", date: "9th", tasks: [
+        { text: "Art day", subj: "art", special: "school" }
+      ]},
+      { day: "Fri", date: "10th", tasks: [
+        { text: "History – Migrants", subj: "history" },
+        { text: "Practice Paper", subj: "default" }
+      ]},
+      { day: "Sat", date: "11th", tasks: [
+        { text: "Geography Paper 2 – Pinpoint", subj: "geog" },
+        { text: "Physics Paper 1 revision cards", subj: "physics" }
+      ]},
+      { day: "Sun", date: "12th", tasks: [
+        { text: "English Lit Paper 2", subj: "lit" },
+        { text: "P&H / ACC / Unseen sit paper", subj: "lit" }
+      ]},
+    ]
+  },
+  {
+    label: "Week 3 · 13th – 19th",
+    days: [
+      { day: "Mon", date: "13th", tasks: [
+        { text: "School – Music Composition", subj: "music", special: "school" }
+      ]},
+      { day: "Tue", date: "14th", tasks: [
+        { text: "Chemistry Paper 1 – complete", subj: "chem" },
+        { text: "Pinpoint", subj: "default" }
+      ]},
+      { day: "Wed", date: "15th", tasks: [
+        { text: "Chemistry with Sam", subj: "chem", special: "special" },
+        { text: "Biology flashcards", subj: "bio" }
+      ]},
+      { day: "Thu", date: "16th", tasks: [
+        { text: "School – Music Composition", subj: "music", special: "school" }
+      ]},
+      { day: "Fri", date: "17th", tasks: [
+        { text: "Geography day", subj: "geog" },
+        { text: "Art presenting", subj: "art" }
+      ]},
+      { day: "Sat", date: "18th", tasks: [
+        { text: "English Lang Paper 1", subj: "english" },
+        { text: "Physics Paper 1 sit", subj: "physics" }
+      ]},
+      { day: "Sun", date: "19th", tasks: [
+        { text: "History (Middle East / Elizabethan)", subj: "history" }
+      ]},
+    ]
+  },
+  {
+    label: "Week 4 · 23rd – 24th (Half Term)",
+    days: [
+      { day: "Mon", date: "23rd", tasks: [] },
+      { day: "Tue", date: "24th", tasks: [] },
+      { day: "Wed", date: "25th", tasks: [] },
+      { day: "Thu", date: "26th", tasks: [] },
+      { day: "Fri", date: "27th", tasks: [] },
+      { day: "Sat", date: "23rd", tasks: [
+        { text: "Physics Paper 1 flashcards", subj: "physics" },
+        { text: "Sit paper", subj: "physics" }
+      ]},
+      { day: "Sun", date: "24th", tasks: [
+        { text: "Pinpoint", subj: "default" },
+        { text: "Paper 2 Geography", subj: "geog" }
+      ]},
+    ]
+  },
+  {
+    label: "Week 5 · 25th – 31st",
+    days: [
+      { day: "Mon", date: "25th", tasks: [
+        { text: "History (Middle East & Elizabethan)", subj: "history" },
+        { text: "Past Paper questions", subj: "default" }
+      ]},
+      { day: "Tue", date: "26th", tasks: [
+        { text: "Sit English Lang Paper 2", subj: "english" },
+        { text: "Bio paper 2 flashcards", subj: "bio" }
+      ]},
+      { day: "Wed", date: "27th", tasks: [
+        { text: "Music Listening revision", subj: "music" },
+        { text: "Bio Paper 2 sit paper", subj: "bio" }
+      ]},
+      { day: "Thu", date: "28th", tasks: [
+        { text: "History USA – Pinpoint", subj: "history" }
+      ]},
+      { day: "Fri", date: "29th", tasks: [
+        { text: "Geography Paper 3 pre-release", subj: "geog" }
+      ]},
+      { day: "Sat", date: "30th", tasks: [
+        { text: "Chemistry Paper 2", subj: "chem" }
+      ]},
+      { day: "Sun", date: "31st", tasks: [
+        { text: "Physics Paper 2", subj: "physics" },
+        { text: "Revise Paper 1 & practice papers", subj: "physics" }
+      ]},
+    ]
+  }
+];
+
+const examsBefore = [
+  "Art exam",
+  "Lit Paper 1 – Mac and Poetry",
+  "Bio Paper 1",
+  "Geog Paper 1",
+  "Maths Paper 1",
+  "History Migrants",
+  "Chem Paper 1",
+  "Lit Paper 2 – ACC, P&H and Unseen",
+  "English Lang Paper 1"
+];
+
+const examsAfter = [
+  "Physics Paper 1",
+  "Maths (calc)",
+  "Geog Paper 2",
+  "History (Middle East and Elizabethan)",
+  "English Lang Paper 2",
+  "Music Listening",
+  "Bio Paper 2",
+  "History USA",
+  "Maths Paper 3",
+  "Geog Paper 3",
+  "Chem Paper 2",
+  "Physics Paper 2"
+];
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+
+let state = JSON.parse(localStorage.getItem('frankie_state') || '{"tasks":{},"exams":{}}');
+
+function saveState() {
+  localStorage.setItem('frankie_state', JSON.stringify(state));
+}
+
+function taskKey(weekIdx, dayIdx, taskIdx) {
+  return `w${weekIdx}d${dayIdx}t${taskIdx}`;
+}
+
+function examKey(list, idx) {
+  return `exam_${list}_${idx}`;
+}
+
+// ─── RENDER ─────────────────────────────────────────────────────────────────
+
+function subjClass(subj) {
+  const map = {
+    maths: 'subj-maths', english: 'subj-english', lit: 'subj-lit',
+    bio: 'subj-bio', chem: 'subj-chem', physics: 'subj-physics',
+    history: 'subj-history', geog: 'subj-geog', art: 'subj-art',
+    music: 'subj-music', macbeth: 'subj-macbeth', default: 'subj-default'
+  };
+  return map[subj] || 'subj-default';
+}
+
+function renderTimetable() {
+  const container = document.getElementById('weeks-container');
+  container.innerHTML = '';
+
+  weeks.forEach((week, wi) => {
+    const block = document.createElement('div');
+    block.className = 'week-block';
+
+    // Count tasks in this week
+    let totalTasks = 0, doneTasks = 0;
+    week.days.forEach((d, di) => {
+      d.tasks.forEach((t, ti) => {
+        totalTasks++;
+        if (state.tasks[taskKey(wi, di, ti)]) doneTasks++;
+      });
+    });
+
+    block.innerHTML = `
+      <div class="week-label">
+        <h2>${week.label}</h2>
+        <div class="divider"></div>
+        <div class="week-stat">${doneTasks}/${totalTasks} done</div>
+      </div>
+      <div class="days-grid" id="grid-${wi}"></div>
+    `;
+    container.appendChild(block);
+
+    const grid = document.getElementById(`grid-${wi}`);
+
+    week.days.forEach((d, di) => {
+      const card = document.createElement('div');
+      card.className = 'day-card';
+
+      let bodyHTML = '';
+      if (d.tasks.length === 0) {
+        bodyHTML = `<div class="empty-day"><span>—</span></div>`;
+      } else {
+        d.tasks.forEach((t, ti) => {
+          const key = taskKey(wi, di, ti);
+          const done = state.tasks[key] ? 'done' : '';
+          const special = t.special === 'special' ? 'event-special' : t.special === 'school' ? 'event-school' : '';
+          const sClass = special || subjClass(t.subj);
+          bodyHTML += `
+            <div class="task-item ${sClass} ${done}" onclick="toggleTask('${key}', this)">
+              <div class="task-cb"></div>
+              <span>${t.text}</span>
+            </div>`;
+        });
+      }
+
+      card.innerHTML = `
+        <div class="day-header">
+          <span>${d.day}</span>
+          <span class="day-date">${d.date}</span>
+        </div>
+        <div class="day-body">${bodyHTML}</div>
+      `;
+      grid.appendChild(card);
+    });
+  });
+}
+
+function renderExams() {
+  const container = document.getElementById('exam-lists-container');
+  container.innerHTML = '';
+
+  function makeList(title, badge, badgeClass, items, listKey) {
+    const card = document.createElement('div');
+    card.className = 'exam-list-card';
+    let rows = items.map((name, i) => {
+      const key = examKey(listKey, i);
+      const done = state.exams[key] ? 'done' : '';
+      const tick = done ? '✓' : '';
+      return `
+        <div class="exam-row ${done}" onclick="toggleExam('${key}', this)">
+          <div class="exam-num">${i + 1}</div>
+          <span class="exam-name">${name}</span>
+          <div class="exam-tick">${tick}</div>
+        </div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="exam-list-header">
+        ${title} <span class="badge ${badgeClass}">${badge}</span>
+      </div>
+      <div class="exam-list-body">${rows}</div>
+    `;
+    container.appendChild(card);
+  }
+
+  makeList('Before Half Term', 'Priority', 'badge-before', examsBefore, 'before');
+  makeList('After Half Term', 'Coming up', 'badge-after', examsAfter, 'after');
+}
+
+// ─── INTERACTIONS ────────────────────────────────────────────────────────────
+
+function toggleTask(key, el) {
+  state.tasks[key] = !state.tasks[key];
+  saveState();
+  el.classList.toggle('done', state.tasks[key]);
+  updateProgress();
+  // update week stat labels
+  renderTimetable();
+}
+
+function toggleExam(key, el) {
+  state.exams[key] = !state.exams[key];
+  saveState();
+  el.classList.toggle('done', state.exams[key]);
+  const tick = el.querySelector('.exam-tick');
+  if (tick) tick.textContent = state.exams[key] ? '✓' : '';
+  const num = el.querySelector('.exam-num');
+  // keep num colour via css
+}
+
+function updateProgress() {
+  let total = 0, done = 0;
+  weeks.forEach((week, wi) => {
+    week.days.forEach((d, di) => {
+      d.tasks.forEach((t, ti) => {
+        total++;
+        if (state.tasks[taskKey(wi, di, ti)]) done++;
+      });
+    });
+  });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${done} of ${total} tasks done`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['timetable','exams'][i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+
+renderTimetable();
+renderExams();
+updateProgress();
+</script>
+</body>
+</html>
