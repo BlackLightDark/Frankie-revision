@@ -260,6 +260,72 @@
     .days-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
+  /* ── MOBILE CALENDAR ── */
+  @media (max-width: 640px) {
+    .container { padding: 10px 10px 60px; }
+
+    .cal-header-row { display: none !important; }
+
+    .cal-week-row {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+      margin-bottom: 12px !important;
+    }
+
+    .cal-label-cell {
+      border-radius: 8px 8px 0 0 !important;
+      border-bottom: none !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 8px 10px !important;
+    }
+
+    .cal-label-cell .cal-task-count {
+      margin-left: auto;
+    }
+
+    .cal-days-col {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+    }
+
+    .cal-day-cell {
+      border-radius: 0 !important;
+      border-top: none !important;
+      min-height: unset !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+    }
+
+    .cal-day-cell:last-child {
+      border-radius: 0 0 8px 8px !important;
+    }
+
+    .cal-day-hdr {
+      width: 48px !important;
+      min-width: 48px !important;
+      border-right: 1px solid var(--border) !important;
+      border-bottom: none !important;
+      padding: 8px 4px !important;
+      text-align: center !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      font-size: 0.65rem !important;
+    }
+
+    .cal-day-body {
+      flex: 1 !important;
+      padding: 6px 8px !important;
+      flex-direction: column !important;
+    }
+
+    .cal-empty-day { display: none !important; }
+  }
+
   .exam-list-card {
     background: var(--surface);
     border: 1.5px solid var(--border);
@@ -731,6 +797,7 @@ function renderTimetable() {
 
   // Column headers (fixed)
   const headerRow = document.createElement('div');
+  headerRow.className = 'cal-header-row';
   headerRow.style.cssText = 'display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px;margin-bottom:4px;position:sticky;top:0;z-index:10;background:var(--bg);padding-bottom:2px;';
   headerRow.innerHTML = '<div></div>' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d =>
     `<div style="text-align:center;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-light);padding:4px 0;">${d}</div>`
@@ -760,10 +827,12 @@ function renderTimetable() {
     });
 
     const weekRow = document.createElement('div');
+    weekRow.className = 'cal-week-row';
     weekRow.style.cssText = 'display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px;margin-bottom:4px;align-items:stretch;';
 
     // Week label cell
     const labelCell = document.createElement('div');
+    labelCell.className = 'cal-label-cell';
     labelCell.style.cssText = `
       background:${ts.bg};
       border:1.5px solid ${ts.border};
@@ -777,9 +846,15 @@ function renderTimetable() {
     labelCell.innerHTML = `
       <div style="font-size:0.65rem;font-weight:700;color:var(--ink);line-height:1.3;">${week.label}</div>
       ${ts.badge ? `<span style="font-size:0.58rem;background:${ts.badgeBg};color:${ts.badgeColor};padding:1px 5px;border-radius:4px;font-weight:600;display:inline-block;">${ts.badge}</span>` : ''}
-      ${totalTasks > 0 ? `<div style="font-size:0.6rem;color:var(--ink-light);">${doneTasks}/${totalTasks}</div>` : ''}
+      ${totalTasks > 0 ? `<div class="cal-task-count" style="font-size:0.6rem;color:var(--ink-light);">${doneTasks}/${totalTasks}</div>` : ''}
     `;
     weekRow.appendChild(labelCell);
+
+    // Mobile: wrap days in a column container
+    const daysCol = document.createElement('div');
+    daysCol.className = 'cal-days-col';
+    daysCol.style.cssText = 'display:contents;';
+    weekRow.appendChild(daysCol);
 
     // Day cells
     week.days.forEach((d, di) => {
@@ -794,10 +869,11 @@ function renderTimetable() {
 
       if (!d.inRange) {
         cell.style.cssText = 'background:transparent;border-radius:8px;min-height:80px;';
-        weekRow.appendChild(cell);
+        daysCol.appendChild(cell);
         return;
       }
 
+      cell.className = 'cal-day-cell';
       cell.style.cssText = `
         background:${isToday ? 'var(--highlight-soft)' : (isPast ? '#fafaf8' : 'white')};
         border:1.5px solid ${isToday ? 'var(--highlight)' : ts.border};
@@ -811,6 +887,7 @@ function renderTimetable() {
 
       // Date header
       const hdr = document.createElement('div');
+      hdr.className = 'cal-day-hdr';
       hdr.style.cssText = `
         padding:3px 6px;
         font-size:0.65rem;
@@ -831,7 +908,7 @@ function renderTimetable() {
       body.style.cssText = 'padding:4px;display:flex;flex-direction:column;gap:3px;flex:1;';
 
       if (d.tasks.length === 0) {
-        body.innerHTML = '<div style="flex:1;display:flex;align-items:center;justify-content:center;"><span style="font-size:0.6rem;color:var(--border);">—</span></div>';
+        body.innerHTML = '<div class="cal-empty-day" style="flex:1;display:flex;align-items:center;justify-content:center;"><span style="font-size:0.6rem;color:var(--border);">—</span></div>';
       } else {
         d.tasks.forEach((t, ti) => {
           const key = taskKey(wi, di, ti);
@@ -1530,3 +1607,4 @@ updateProgress();
 </script>
 </body>
 </html>
+
