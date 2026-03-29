@@ -114,10 +114,10 @@
   .tab:hover { color: rgba(255,255,255,0.8); }
   .tab.active { color: var(--highlight); border-bottom-color: var(--highlight); }
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 28px 24px 60px; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 16px 16px 60px; }
 
   /* WEEK VIEW */
-  .week-block { margin-bottom: 40px; }
+  .week-block { margin-bottom: 4px; }
 
   .week-label {
     display: flex;
@@ -147,20 +147,8 @@
     border-radius: 99px;
   }
 
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-  }
-
-  .half-term-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    max-width: 400px;
-  }
-
-  .school-week-grid {
-    grid-template-columns: repeat(7, 1fr);
-  }
+  /* Calendar grid - handled inline in renderTimetable */
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
 
   .day-card {
     background: var(--surface);
@@ -412,6 +400,11 @@
     margin-top: 4px;
   }
 
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
   .today-marker .day-header {
     background: var(--ink);
     color: white;
@@ -426,7 +419,7 @@
 
 <header>
   <div style="display:flex;align-items:center;gap:16px;">
-    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCADIAMgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC2jMHbHUFf5kVmXjFNQfHGX/nV0yAyZGfmGf5Gs/WCVvFfsygn8DX5rNan6UmLpvNq8Z5xK6/+PH/GvIdcUpod6p4Kgj8jivWdPbElyvpNu/MA15X4q3x22qIAMrM6kHuNxr1cg0rzXoeHnqvTg/Us/BQ503VFyc+Zng/7FUbDB0HxdET9y5mbH1qb4MHNrqyZI5DD/vmqmnNk+MYe3myHH4V9K1++qfI+cT/dx+Zl/CZwPGEOTjMDf0r2v4dEHR7g8Am4k5zj/lo1eG/CuQx+MbQ4z+6f+Qr3H4fAL4eldiEHnS9Tx/rGOaxzVXk/l+ppgX7v3kniqE3OjzjgksuM/d/GqnhzVtHxcade2sNjdWUfmxTBdvmIOoI7/hVXxX4hSzY28MUUxFwI/wB8pKt6kAdRWdqU2mS6gJJrdLtdu2KVxsiU45TA649s461eEioR5ai3KrK+sWReGtAmTxLJrsNxBdxXMzPMIzzCSdwBH6e1e2+D5NnjLQkxtP2lcj/gLV5J4eVPDeqQmOQKZvkWFM87vVsjcR7V6t4bnhk8R6FqIeNYjcRsTu5UZwd3+NevQg5YmEk7nj5hKMcFVVraP8j39WIApGcg1l2XiXw9eJG0GrWz522gBuQemD6dK2JwPsryQbZG2Epg5BOOOlejKEoP3lY+LpVIV0/ZTTt2af5EPmV8zeOtXfUPEl7HFdPIhuPmyOC4/u+3+Ar13RfiDbS6zJoWs232O8WJmBzhW2qSR7HANeF33mJqU92scSxyOzqI23YDZIGa+kyrDTw85ua6I+PzXGUsZGnKDvvo9HfToMhufJdYkBZ0BLIq5ye2arlrtXLyQrEfRj8xJznH5VYsXkMU9yPMg2DaNozvzzgk9gP6VS80SuEnIRh0I5z6g16rkeXCGr0NS4hF1AilXC264ZwOqj7365Maruis8ixXayRxtLt2BgBkcDHHvj8OaqxT3MabVjbJbcDtJyvcAegzn8KDDdSYmu0EUQcuxlPJxjAA/IVDkbKbyK7Zbt3dtKaARi4aJ8M+Ccn2qKKG7t5Ud7eQO3BDDnOR1/CtXTX00j93cTIn2oExkjI43fiMZ/Sq8l+089xywGCR9Bx+f+FWmmjmlzQk1bRjpHNxA8ylUaMeZg9SMbR/Oo4YQ7kNKS2duc4B/wD1Uy4VXkYJj/WjH+7jkGqZnmGTCu4qTlQe44qlKy1FGDloi9bzN5ksMgU7DtPzcEjqfpRUEaMYjI1oW8x2XPTYSAMY+popSrKNkz0MJlUsWnKPQ0sAPkHjfgfQjj+dVdWXdtb0XIq1IPLXg52sPyBqC8xsXPbg1/M9Xoz+vImbYORdXC9tqN/Mf0rzTx3+61DWYicKZCw/EA/1r0iP5dSbH3XiI/Jv/r15t8TT5eq3pPSWNGz/AMBA/pXp5G/9qfmv1R4+dr/Z0+z/AEY34LsRFqmOSf8A4mqemMqaz4whI+8GI+uDVj4NMP8AiaISAOD/AOO1U08/8Vn4miwT5kbYA78Cvp5fxqny/Q+YXwQ+ZH8I9IurjXLG62ogaORky4DMg4LY9M8ZOO+M12uu602n2ejaPujSVzvIkySCTgZ9yc+3FYfg+5bSfDSiZJEvHQQNkglIlyQOOnUn8KoC3tvtnnz3wwjlg6jOR1x70qj9pVcpbI6KUfZ0kluzchsL+9vobZU+02LlmkTzsNDKowck8iIPPN9bXKxW80BmaORVt5I+YwcqxJHq44Ix2q54h1a1stNsodNid4w7HcrAOThWLE+rZHsBWnaW9s2qWJmM0Rm2puYgs2OABjmrWvVFuT5XqbPi65vLqbT7YGaGNJFdI5NwUHpgjBzjPFU/CHiuTw5c3c8aWt0jW5RY7mPeodumcEZGM9+9bj6FrE+qaVHcXEVxFI6KI0kZWYMSB04GD1OO1XfEMthp+px24u7q4TGWU7AHPYkHHpkZ9v5ehGblJxemhzzUVG0jUvfE41KG0hWySx+3JJ5otz8u0/dCBsgHp0z2rz3xHNq/h5tQF1JBqF3dFt8kkJUQqAQEC7sH3Pb0/HduPEFhZ6fAstoEeKQPEoLMWbPyg8nGBxms/xJrNtqPguZNQ09bHUYr6T7OyEqJYs/K25eD0JJ7A9+MaKnGpHTbrc55ycdWO0nWJLG80qWM+SLq2ljm+XjAySQR0+9k9+lbXhLRbfVL+28UfaZ1imuVm2xgbH+b7xJzn6evXiuBt9RgXVreMhECBVlRWZfZeh9K9J8MXFtpOlwtpkzSSTJIdrmMqVJOGGCBxkfhScYwkm1bX+v8yznnfmiztfEl5dafe2GxpWsb9GiGX4jYdBz2OetXtL1K/s7ZEnnijKs6rsj4J9cntXCfEDU5Jl0eHSrqJWNzNJPIj4AKRqv8Q4HzMevXJrHm8ReIbKOO3stVkt4xkNtA3MMdc4zmsp4eVaSS2XmW6sYq66nodxqzG5E14ZkjGF2x9W98dKsWWtwy3P71igRf3cq5APpx6Vj+GLTULt7Ke5kluJpI0JDzBmI7en1puoJHZaqkdwEt1MgAGeSvrkc1iqcm7W3LnOnbXU9j8M+K9ItW863mSdmTaHQ5Ax7dOlaA8baDqCBLiZoXf8AiaM4/McV59YW2i+INHu7AX81uJoH+zneuY+mVOOMjPFc7peo/wBl+Kv7LFpFItpMI9oUBHIOCOg4xnH0NVPDpq8SIYiUXaT0PW7+28Paupi1K0tLx1OQZkDsD9cc1y178NfDd3+/trOPT5T0e0JQA+6ggfpW1Y2k8enxvA5FxGvyOOSCO9N1e2u9Q0+5t7G5SC5ZeJGXIz6fSuH2NaEuVpnVGdOcbppnnniH4YX1jAbvw7eJI2Sf7OuJCHH+43Qj2JzXl/iLTdS0K7Ni2n31nGxBiOVmifkbdjAHI+vTHFe7+GY7/S/PsLmeSS6hlKb5DuLZ5ypxxwf0rqI9DtY41gWJXVVCguMnAr0MJmOPo+5Ums9n/W3kclXDYadrxWr7Hn/wAHfhzd6Hpc2tazBLBf3n7tYpkdXjj9WB4+Y/oB716nFE0e+Q8KBsDehAz/ADIqxZafFBGUiX5FbG0duvSrctrFKkY2jB3bieSSf8ABX55muNqY3EyrVN3+h7uFoQoUlTgjMlQyxhRjmP5fQjB/lU0cCqp3jblSGCjoRgr/QU3yuePu5G3g/d/T9KVcM4B6kkZzXBsbbkaZhAMH3kH8hRTcmRsnJ+bv6cUVQhxJLH1k/lXHfEX/j/tm/6YEf8Ajxrs1+8fq1cb8Sv+P2y/64H/ANCNdeC/ifI48X/CZzVjzGxqVWS+RnXH8VZqymucxNm3OGz9K9y+D5LaTdYHSRcf98mvCLeTbMgPrXvHwckQ6LdAH5vMVvwyBXBmS5aN33PQyt81VrzR6LcQw3ZYhGkHUDGK8n+Jfwi1LWdVl1jw/fW8V1IP3ttclkEnH3w+Dgn36e9ezqm0qXbbknIHvUSYJbzEOPlzjvj/wDVXg0atSjLnp6M9mpShVjyzVz5C8VeCtf8IeV/bNlJCsmdk6sHjf8A3WH9K5SSOQ5KfxAjH1r71vbCzu12z20UoH98A4+hrjdW+EvgPVpGkl0VbKVurmzkMGf+AZAP4ivZo55paq6PJrZWr3gz4/e1dnBmwJAO4rwKz7oMi7FyB7V9daj+z9oLo7aXrd5E3JCXUauD7Hbg/pXA+IP2cbmO3kl0DWoZn/hgu0MT/8AfajOa9inmmCl8Vj53EZXjabvFXPniSGPiKBOQAMnvWdfWxjfayZUjseTXrHiH4S+NvCkyvqGiTyRr/y8WuJlP4jn8RXGXGmXyTFp7SYFuS8alz+le/h6kJRvF3PEr0pxfLJHjXxPQJ4hhPDFoQT78VP8J9Mk1HxX5sZHlWkRkbHcscD9Ca3viHZa3Y6vp6XbXm67iMqiTd+7wQR16d66f4d6HHoeh38NzHie5k3l8YJXHGfxJrqoVowdRy2sfRUaScfd2Z0fivU7vT7C60n7c01mVZYEkAOwcHr3rxjVddstGRhe3CifvGpyR+Fdz8QZbhNMuJ7a5EJQeU6n78b+n6V4RrUM+oOyXF3JMx43GvIxlSpVl7vzPRoUo04u5vReN/7Uu7SGe1it9rj5A2ZOuASM8e/SvSfDl/dMpS2jaaeOHLKGHygcjA6Yyy4Hf14rw8aTqMDw3M80sOwjMfJ9+p9q9D+HWvx20gM2oTJF9nkDNsUlWxwMkA9a5pQTVzao+VJnpPhi2urfUJY7uFYpXfzI5bdhsOecc8jGK9w8EJbXGmakbIJHDJKjFfvFj0bJ/OvmXxN4uvbCO1vbVDdvb8mJm2YPf5h0P4c10Pg74n/wBla7bpfTTSm7wgCyMNkuCBlMbQD6jPatXRf+XQm7dT6kV41iuN20BHUD+tL4jthqHhfU7YAEU28kgHqoJP8iKreHBbz2NreIqKl3AkgPo2MH+VaIjd/KkxuUoQVA6DB/wrz6kbTkn1OqD9xGTqQjsNMtbWJFRdkYGPpVDwZ4sj0bxPpMy/L9nuBJx3UHn+Wa1JZFv9Wa1ZVdLcswPQMRxj9K5ZoryCzuWMZmFncCUxr1O3sfyrVtxp8p5kZ+1x7uv/h0u56b4kF9N4Z0u7sD5d0YXkLt0PlgYOPfivAr7xz4z0Xw/GlhfXjI8e5fPjEqg+m5s5HvX074F0G08XeH4dRiHkzQ5hnibgqy9CPce3auR8d+CtB0vQ9W/tma5tJraQrFbhWl8/BGMDqODyT0Hp0ru4fzN4SpOnVi3Ba26o8jPMDHMKMakFaSZ8ctrN1Nrd5PfMl5OXd5fPCGNmf+8Ae2cY9OK9F8B+MFgvhca3pYl0+RgrFAqzRMf7ue3PfPHpW/4P8AC1p4N0G7N8Ya3p1pPaYSWN2k81Swz83LD0x+lJKvSq6vS+q7fgazoSjCcZae7r3/AOGOu0+4uNS0+OaDVJVtrqNHFm0ql4WYZUA9cD1rZ1OW0vbBYnkiuBHGiOzxA78AfdzxXkngXxTcaaZNB3OBb4WBJO3tjrj3r0y2i8y3DxuUBUZAPp1r07JxTR4WKhKnNxk7mR/ZNqb5bl4/nQEKe2K15WS2t87sqAevOazLp54bKaRVkaVVJjYjbz9Kw9FttR1JrqS4JSCO3aQPn5mPpgcge5quZdGedOMk0dFb2v2xHgVMhV5B4zjt7GsbWrS50e3jVBsiY/Kf4ga5eDxdcLqs8MFuklqBhGkJJ6dSB9K0LlZrqFXuopGiHyliQRk/wCf8Ki8bkTjLlak+5ePjW4VjEkU4B4bfz9eMVHqfiuEgr5Drkf8tDtP4cVznhfULbWNRk07yXaWaRvJckAMQMjI9c459a7LSfC0jN/pU0MO7+GOPzHHpyMAfpScYRVmzPmUpJ20L1j4o1C4JWKSFgPRcfzp174h1m33tLJFsPVeB/StWx8O6fCm6S2iZ+2VBIHQD8sVz3jC9Ntp7WOmjybeXKSzAdeeg9e9HKiXJkH2mS9gkklRkk5+Zscf0rP0nxMx8Qpb3M5+yKGhVW+6R3+ue9aul+Hb+4K3VpqckyN0XzDz+GQKXxN4Bs9YtRCrT2k6DEciykfmO/wCtZ1IpcyXcXM7J2Or0zVNMks2e3nWQkAM4bJPvjrzUiapbr8rFUJOQ2OeK4I+EtR0iGC0g1m8Z5WxIpYttA9x3pJvCuvPJJC13NN5SZmCTEL+H9QK5ZYaDfvc36nZTxVSEb8nvdHbXP2mWN5IEKoQMhuo9BVSHzLecykbg6A9ecdRWTY6fq0FpHBb3eFCgqHyccc8d/8AParMlnqEDzNJMyJJyAuCFJ5HNEIcrE6zehtTmS3t5bhwAjHGc9xVHUbp2tmjjA3jAbcO3X/9VWDBdrZ3DGVXj4YBSCR+PSoYTDLJGJoVlHK5yCOQKSRG7OauHlRZkRZAyE5GCc46dPeuct7OKa8DW6OjKXHl57+p+laM9x9n1eUNMvmSH5ApGF9gR+VWLZQ6xxBjKoYM27tgE0bG0G2tBsNlHYOPs4y3qxBwPY1x3iKa4t9WjeaECIMAHJ9Djp9K9Ka3t2Ro3mBbI27Rj1z+FeV+KzqGoyyQ2dtHLHDJhpZjwPUAdqUpWRrVio2YxdQ0a2EW1JZpTgrI/IX6D2rM8Qa9Na3PlvCswTtHjBrIOl38rETWrCNeq7wT+VaeleGSz/ANqXUkkUYb5fmw7Y+v8AnrUJW1IdRN2RVjv/APRXm+zzpcxtuUOemTzjv7fStC0+H8l+6Syfari5mBUqspVSuehA6kH09K2tZTSYl8pCBuXJVhnDe4rnNWvtVijlubMHYDiNz0znqCPepai2JL2j5TL1Lwle2spi/dXBB5YjY35e9Z0mhy2gLvDMAe4wc0ouLy4hVpLpFlJIMi9V+mKF0i/kJ+0bJAT3PJrNvqbxpws7mqul6jNHGbWN1BJDcAgf4VFc6LqTjH9mTKe+YWq7p1heaYNthLHJE4/eqTnjJ4A/OulXxJpumrEmoNBvYH7SsaAkHtjb9PzrlqVJQ2OpU4yWp5re6LeWsxSe0ljcHHzRlf5iisLVfiNrWv+MNVlE7WGmm9m+z2cTYVEL4A9yBjJorvjmk2veSPPlk8L2iz7NkDM5yeh/kaqX4MkBVFDBWBPsN2TU4HlhQOpb+VVNQYC2bLbfLByT2wc17NKbU0z2ZwUotGX5xN3cIw4EbfXvWHqMwjVix9TV4zmS7nUf3G49Oaz9T2y5HUKEX35Ga4Kb95nO3Y5Ym4luvVf6V9AfBqzW18HLMVAe7mMpI7joPxx+leAWJDXajHDMAfyFe9fCa4C+GY7Qne1sSOvDK2SP6g/jXFm0r00vM7Mv0m35Hf6DGXnKdCOcH3NR+LPl8N3RLbcFOcZ/jFOs2WFI9p4z09Kj8UMsnh27KnIUoRnr96vDiuZWZ7E3aLPMPH/hWHxDp8LXPlG6tJFkiWTocfxAfj+leWal8H9HvNSmfSruW0nPzNbzHfHux2IP8q96vrIXtqIjMY9jZBA6kHIwaxbgQ6JdC5hYi3c5lX+63qKuVOT3OenWcNjw6X4OXkJe8v7a5uy3Bijk3K3ruJ4x71yN18GPHk1xNe6baBbOSQsrzXLK2B6KOgzX1wmpW1yYGdRcxujyAyKSAq9sjpyKzZ7CW/0e5udOuHtb2PMiLjK544I6VjKLi1exs5xktbHz+nws8T+HfD7X0lxJJdRx7hHFJyR3JY5zXAfZ75ZhLFb7DuztLEj6GvpH4j/DLVdBPhfV7m+WfT7m+j3xMCHjLHBwe/vXn0Dw6aqaXbtFHrVsBbXGwZVk6Yz6jocfzr2MLiHGCi3qj4fOcIqtaVSnqpfqUvBHhbx94oufs5W306OMgz3tzHhVHp7k+gBr6o+Hng6w8F+H7bSrd2lfbvnnb/lpKwBZj6fQcDpXivwO09tQuPEEFw7D7DcR2t1I3VpEbc4J9FZQR7rXvWksz2scjnLHgsSM59c18dn1Z1sSoLZH0mV01SpuT3Zr6fZPEFldfmiGGBH8q5rxx4PsfFum3FrPbR/bZrR4YbgA+YhIP6Hg10sDorAk4RVwMCqfivxjoXhi0jfU/kLqWjhBO5V7Eg8cV8tGjU9rypa9D6Kth6lSmqaTu0fE994e1ax1K4sdS01reS3Plsm7JGOwzjFcbr3g7XNOQX0mhXotkBZpmiLqM9flAzivpTWfG+ga7NPdWOnQxWLrugnJBllZuuVz04HI71xc89wl4Hg8/yE4iWQ4cjryvY15eOwNeE/aQm0n87HJXwtSMObm16dPv8zmZPD2u3ttZDTrS4jgs4VgghPPyqOT9T6V6B4Y8N3mnQi3u5JGjGf3bKvzVt+DdHvNQ0sXGqMsBvELJbg7iFx1Jxxx0xxXfaBYQ2lm4hhRCW+ZlXBzjnnvXq5dlFZz56rdn0Oetio0oqnFa93+R5f4v8AhV4d8V6Y8k1uLO/VCZZ4CVbj0/xBFfPniTwzd+Gr86LqMbrcW5JxIhLsmeH+mck/TFfcM9sjMzpw+PlPpXIeM/CmneJbBreWGEX4H7m5OMEjp9DXrcOcSVcNXVGrJuh+XT0OHHYNSSqw+Jf1seTeENXt/Deja7La6fKZruSN5DICSB5uOmB9K9Y8C3lrZeDtIlgsgLmaBWVY8AbQOpPf614v488KL4R1AWpkklEkPmIzEbgMgfMO3OR9K6bwVqrW8FtZWbyR3NiirHPJkBguemMZOB1r6bG4KVTE+2XuuS06eQ8LOM6fsXqr39ep7t4YnlktpormIPGW5cDJ3duSa3bmeOZY7lGZt7B3UNgHPXg9K8C0Xxx4rsPHk2jaN/Zl7Pcui/Y5IJC7bfvMrAgcDqBzwAOa9o0zWru0tmN5bRM+SqMkm8H8gRj+VfGYvB1MJVcJo+noupGTpT3XQv68rTaFfqqEL5ZXH1BqlZXuq2WlW0c4RRHGqZPO7HfitK9u4JLSb9y8kzJiPb0VcZLc9K5WQVTX3MV5cXttDboGG3oe+OKtpGl6hkgVQoQMzbh+GfxrHnuFkt5jFJiQ7UBxkAdakgGozRPBPfxLHkA7UycjuTVqyJT0ubVro19GzpHqpWFV3+U0AKknue2PxrJ1nT9WXVlmur2COPaSEVBwuc9c++K0dMm1C2JUahO5cbgVjJVfzHH5VW1e71JN08VxHJJGhKqUYFT+YpJruRNPsb2k6gHtHggjBj2FQ+DuxXNi2vGV7h4TFGqgbeMn1JFRabrEpnea/mWBGXGWYHGPbBrXsdThvZ7W2jBiCjczb+QvfoKl9kRH3nqcJe2F1dpJJ9ncJGH7kk57VQk0ue8h+yXkZiiIA/dqMkdwQfrXqsuk2EkfmMuMdGB+8PeuZbSP7Pe5WymhR3z86PkgduoqWuxtCW6uZi+F7i0tjJDaNJGDuMigZA+ue1aFn4JhtgJnDyl8DY64B+ueKxdT0TV0U+Tqtw8nBO3BI/OuU1LVLqOWS0ub+dtv3hjaTjuMcU+RSVNWI5pu90ely+E7C4KPFMIgMFhx9cfjUpX7JFhkMYBA545Pfk9q43wfrH22eGSNmdD8u0n8q7PVLW7QLJGxHy/P1Hoe341ClHqc81KNlI5PW7OS2mNzcRlArEAH+IduKt6boU9xIJ7hJFQcqvfPqfWtIXcT2z2l5b+ezHdGT1B/Kt7SpTapDHcoMN0B6j3NRK6MJK0izb6PBbwMrDBxjArldfaGKC5YpxuyPxrsJL0MzxuBnAwD1xXD+IbqRDcFSdxbj3rHVvQ1oJuRy7MWR+vFUJlJ3Z7ZrSaE43H0NVJY+Dj8KlxJnHk2L+n2k0lvdGFhGY1B3j7wGcgj3qCxt2e3e/ubxJjJnLqfvEnNPRJTZCCYjEn8J645P0NXdOsVNtNBGD9pTjHcd81tbQydUxpdOigme7uGklJXaFMhC57kf41vaTotpNaLE67iR17fWqGjrNNfSPdLtRflCt0U5rqGm8m+VAAURcDHPJ9Peu6hDkjqfuOQZV9SwCTXvSd36b/P8At7DIbWzs1CrGAF6cZrFuLCC8nuCVaA7tvlv0b37VrK63CSgdOQe3FZNznyrqRiCWHzAcgjr+ldsZJLQ+4qWkixZwx2cC2oijjReRtGPbNZF1FYwavHKlrIsyZeOSNvljzxtFad3ceXZoTCHYrlQe2cVTjiSXVpbORfMRYw8jZ+8fT/PpUylJroYON3cW4jhS5EQtnuJH4OOny89qHsdNkhDLbqCxz8wznP8AnFRxSI0xjj3eZHwd3YDpx60+dYp5oXE8OYwGAf7p7iiMn1MpQbep//Z" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.2);" alt="Frankie">
+    <img src="data:image/jpeg;base64,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" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.3);" alt="Frankie">
     <div>
       <div class="header-meta">GCSE Revision · Apr–Jun 2026</div>
       <h1>Frankie's <span>Revision</span></h1>
@@ -467,6 +460,12 @@
       <div class="legend-item"><div class="legend-dot subj-geog"></div> Geography</div>
       <div class="legend-item"><div class="legend-dot subj-art"></div> Art</div>
       <div class="legend-item"><div class="legend-dot subj-music"></div> Music</div>
+      <div style="width:1px;background:var(--border);margin:0 4px;"></div>
+      <div class="legend-item"><span style="font-size:0.65rem;background:#fef3e2;color:#92400e;border:1px solid #fcd34d;padding:1px 5px;border-radius:3px;font-weight:600;">🐣</span> Holiday revision</div>
+      <div class="legend-item"><span style="font-size:0.65rem;background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;padding:1px 5px;border-radius:3px;font-weight:600;">+</span> Added by Claude</div>
+      <div class="legend-item"><span style="font-size:0.65rem;background:#dc2626;color:white;padding:1px 5px;border-radius:3px;font-weight:700;">LIVE</span> Exam today</div>
+      <div class="legend-item"><span style="font-size:0.65rem;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:1px 5px;border-radius:3px;font-weight:600;">📝</span> Upcoming exam</div>
+      <div class="legend-item"><span style="font-size:0.65rem;background:#e5f2eb;color:#1e6b3e;border:1px solid #a7d7b8;padding:1px 5px;border-radius:3px;font-weight:600;">✓</span> Exam done</div>
     </div>
 
     <div id="weeks-container"></div>
@@ -507,284 +506,167 @@
 
 const weeks = [
   {
-    label: "Week 1 · 30 Mar – 5 Apr",
+    label: "30 Mar \u2013 5 Apr",
+    type: "easter",
     days: [
-      { day: "Mon", date: "30th", tasks: [
-        { text: "After school Maths", subj: "maths", special: "school" }
-      ]},
-      { day: "Tue", date: "31st", tasks: [
-        { text: "After school Art", subj: "art", special: "school" }
-      ]},
-      { day: "Wed", date: "1st", tasks: [
-        { text: "Macbeth quotes revision", subj: "macbeth" }
-      ]},
-      { day: "Thu", date: "2nd", tasks: [
-        { text: "Art (in school)", subj: "art", special: "school" }
-      ]},
-      { day: "Fri", date: "3rd", tasks: [
-        { text: "Macbeth with Mum", subj: "macbeth", special: "special" }
-      ]},
-      { day: "Sat", date: "4th", tasks: [
-        { text: "Biology Paper 1 flashcards", subj: "bio" }
-      ]},
-      { day: "Sun", date: "5th", tasks: [
-        { text: "Biology Paper 1 sit paper", subj: "bio" },
-        { text: "Flashcards for poetry", subj: "lit" }
-      ]},
+      { day: "Mon", date: "30 Mar", tasks: [{"text": "After school Maths", "subj": "maths", "special": "school", "src": "original"}], period: "school", inRange: true },
+      { day: "Tue", date: "31 Mar", tasks: [{"text": "After school Art", "subj": "art", "special": "school", "src": "original"}], period: "school", inRange: true },
+      { day: "Wed", date: "1 Apr", tasks: [{"text": "Macbeth quotes revision", "subj": "macbeth", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Thu", date: "2 Apr", tasks: [{"text": "Art (in school)", "subj": "art", "special": "school", "src": "original"}], period: "easter", inRange: true },
+      { day: "Fri", date: "3 Apr", tasks: [{"text": "Macbeth with Mum", "subj": "macbeth", "special": "special", "src": "original"}], period: "easter", inRange: true },
+      { day: "Sat", date: "4 Apr", tasks: [{"text": "Biology Paper 1 flashcards", "subj": "bio", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Sun", date: "5 Apr", tasks: [{"text": "Biology Paper 1 sit paper", "subj": "bio", "src": "holiday"}, {"text": "Flashcards for poetry", "subj": "lit", "src": "holiday"}], period: "easter", inRange: true }
     ]
   },
   {
-    label: "Week 2 · 6 – 12 Apr",
+    label: "6 Apr \u2013 12 Apr",
+    type: "easter",
     days: [
-      { day: "Mon", date: "6th", tasks: [
-        { text: "English Lit Paper 1 – Poetry anthology practice question", subj: "lit" }
-      ]},
-      { day: "Tue", date: "7th", tasks: [
-        { text: "Geography Paper 1 revision", subj: "geog" },
-        { text: "Haircut", subj: "default", special: "special" }
-      ]},
-      { day: "Wed", date: "8th", tasks: [
-        { text: "Geography – complete practice paper", subj: "geog" },
-        { text: "Art", subj: "art" }
-      ]},
-      { day: "Thu", date: "9th", tasks: [
-        { text: "Art day", subj: "art", special: "school" }
-      ]},
-      { day: "Fri", date: "10th", tasks: [
-        { text: "History – Migrants", subj: "history" },
-        { text: "Practice Paper", subj: "default" }
-      ]},
-      { day: "Sat", date: "11th", tasks: [
-        { text: "Geography Paper 2 – Pinpoint", subj: "geog" },
-        { text: "Physics Paper 1 revision cards", subj: "physics" }
-      ]},
-      { day: "Sun", date: "12th", tasks: [
-        { text: "English Lit Paper 2", subj: "lit" },
-        { text: "P&H / ACC / Unseen sit paper", subj: "lit" }
-      ]},
+      { day: "Mon", date: "6 Apr", tasks: [{"text": "English Lit Paper 1 – Poetry practice Q", "subj": "lit", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Tue", date: "7 Apr", tasks: [{"text": "Geography Paper 1 revision", "subj": "geog", "src": "holiday"}, {"text": "Haircut", "subj": "default", "special": "special", "src": "original"}], period: "easter", inRange: true },
+      { day: "Wed", date: "8 Apr", tasks: [{"text": "Geography – practice paper", "subj": "geog", "src": "holiday"}, {"text": "Art", "subj": "art", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Thu", date: "9 Apr", tasks: [{"text": "Art day", "subj": "art", "special": "school", "src": "original"}], period: "easter", inRange: true },
+      { day: "Fri", date: "10 Apr", tasks: [{"text": "History – Migrants", "subj": "history", "src": "holiday"}, {"text": "Practice Paper", "subj": "default", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Sat", date: "11 Apr", tasks: [{"text": "Geography Paper 2 – Pinpoint", "subj": "geog", "src": "holiday"}, {"text": "Physics Paper 1 cards", "subj": "physics", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Sun", date: "12 Apr", tasks: [{"text": "English Lit Paper 2", "subj": "lit", "src": "holiday"}, {"text": "P&H / ACC / Unseen sit paper", "subj": "lit", "src": "holiday"}], period: "easter", inRange: true }
     ]
   },
   {
-    label: "Week 3 · 13 – 19 Apr",
+    label: "13 Apr \u2013 19 Apr",
+    type: "easter",
     days: [
-      { day: "Mon", date: "13th", tasks: [
-        { text: "School – Music Composition", subj: "music", special: "school" }
-      ]},
-      { day: "Tue", date: "14th", tasks: [
-        { text: "Chemistry Paper 1 – complete", subj: "chem" },
-        { text: "Pinpoint", subj: "default" }
-      ]},
-      { day: "Wed", date: "15th", tasks: [
-        { text: "Chemistry with Sam", subj: "chem", special: "special" },
-        { text: "Biology flashcards", subj: "bio" }
-      ]},
-      { day: "Thu", date: "16th", tasks: [
-        { text: "School – Music Composition", subj: "music", special: "school" }
-      ]},
-      { day: "Fri", date: "17th", tasks: [
-        { text: "Geography day", subj: "geog" },
-        { text: "Art presenting", subj: "art" }
-      ]},
-      { day: "Sat", date: "18th", tasks: [
-        { text: "English Lang Paper 1", subj: "english" },
-        { text: "Physics Paper 1 sit", subj: "physics" }
-      ]},
-      { day: "Sun", date: "19th", tasks: [
-        { text: "History (Middle East / Elizabethan)", subj: "history" }
-      ]},
+      { day: "Mon", date: "13 Apr", tasks: [], period: "easter", inRange: true },
+      { day: "Tue", date: "14 Apr", tasks: [], period: "easter", inRange: true },
+      { day: "Wed", date: "15 Apr", tasks: [{"text": "School – Music Composition", "subj": "music", "special": "school", "src": "original"}], period: "easter", inRange: true },
+      { day: "Thu", date: "16 Apr", tasks: [{"text": "Chemistry Paper 1 – complete", "subj": "chem", "src": "holiday"}, {"text": "Pinpoint", "subj": "default", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Fri", date: "17 Apr", tasks: [{"text": "Chemistry with Sam", "subj": "chem", "special": "special", "src": "original"}, {"text": "Biology flashcards", "subj": "bio", "src": "holiday"}], period: "easter", inRange: true },
+      { day: "Sat", date: "18 Apr", tasks: [{"text": "School – Music Composition", "subj": "music", "special": "school", "src": "original"}], period: "easter", inRange: true },
+      { day: "Sun", date: "19 Apr", tasks: [{"text": "Geography day", "subj": "geog", "src": "holiday"}, {"text": "Art presenting", "subj": "art", "src": "holiday"}], period: "easter", inRange: true }
     ]
   },
   {
-    label: "Half Term · 23 – 24 Apr",
-    halfTerm: true,
+    label: "20 Apr \u2013 26 Apr",
+    type: "school",
     days: [
-      { day: "Sat", date: "23rd", tasks: [
-        { text: "Physics Paper 1 flashcards", subj: "physics" },
-        { text: "Sit paper", subj: "physics" }
-      ]},
-      { day: "Sun", date: "24th", tasks: [
-        { text: "Pinpoint", subj: "default" },
-        { text: "Paper 2 Geography", subj: "geog" }
-      ]},
+      { day: "Mon", date: "20 Apr", tasks: [{"text": "English Lang Paper 1", "subj": "english", "src": "holiday"}, {"text": "Physics Paper 1 sit", "subj": "physics", "src": "holiday"}], period: "school", inRange: true },
+      { day: "Tue", date: "21 Apr", tasks: [{"text": "History (Middle East / Elizabethan)", "subj": "history", "src": "holiday"}], period: "school", inRange: true },
+      { day: "Wed", date: "22 Apr", tasks: [{"text": "Physics Paper 1 flashcards", "subj": "physics", "src": "original"}, {"text": "Sit paper", "subj": "physics", "src": "original"}], period: "school", inRange: true },
+      { day: "Thu", date: "23 Apr", tasks: [{"text": "Pinpoint", "subj": "default", "src": "original"}, {"text": "Paper 2 Geography", "subj": "geog", "src": "original"}], period: "school", inRange: true },
+      { day: "Fri", date: "24 Apr", tasks: [], period: "school", inRange: true },
+      { day: "Sat", date: "25 Apr", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "History (ME & Elizabethan) evening", "subj": "history", "src": "added"}], period: "school", inRange: true },
+      { day: "Sun", date: "26 Apr", tasks: [{"text": "Sit English Lang Paper 2", "subj": "english", "src": "original"}, {"text": "Bio paper 2 flashcards", "subj": "bio", "src": "original"}], period: "school", inRange: true }
     ]
   },
   {
-    label: "Week 5 · 25 Apr – 4 May",
+    label: "27 Apr \u2013 3 May",
+    type: "school",
     days: [
-      { day: "Mon", date: "25th", tasks: [
-        { text: "History (Middle East & Elizabethan)", subj: "history" },
-        { text: "Past Paper questions", subj: "default" }
-      ]},
-      { day: "Tue", date: "26th", tasks: [
-        { text: "Sit English Lang Paper 2", subj: "english" },
-        { text: "Bio paper 2 flashcards", subj: "bio" }
-      ]},
-      { day: "Wed", date: "27th", tasks: [
-        { text: "Music Listening revision", subj: "music" },
-        { text: "Bio Paper 2 sit paper", subj: "bio" }
-      ]},
-      { day: "Thu", date: "28th", tasks: [
-        { text: "History USA – Pinpoint", subj: "history" }
-      ]},
-      { day: "Fri", date: "29th", tasks: [
-        { text: "Geography Paper 3 pre-release", subj: "geog" }
-      ]},
-      { day: "Sat", date: "30th", tasks: [
-        { text: "Chemistry Paper 2", subj: "chem" }
-      ]},
-      { day: "Sun", date: "4 May", tasks: [
-        { text: "Physics Paper 2", subj: "physics" },
-        { text: "Revise Paper 1 & practice papers", subj: "physics" }
-      ]},
+      { day: "Mon", date: "27 Apr", tasks: [{"text": "Music Listening revision", "subj": "music", "src": "original"}, {"text": "Bio Paper 2 sit paper", "subj": "bio", "src": "original"}], period: "school", inRange: true },
+      { day: "Tue", date: "28 Apr", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "Evening: History USA – Pinpoint", "subj": "history", "src": "added"}], period: "school", inRange: true },
+      { day: "Wed", date: "29 Apr", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "Evening: Geog Paper 3 pre-release", "subj": "geog", "src": "added"}], period: "school", inRange: true },
+      { day: "Thu", date: "30 Apr", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "Evening: Chem Paper 2 review", "subj": "chem", "src": "added"}], period: "school", inRange: true },
+      { day: "Fri", date: "1 May", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "Evening: Physics Paper 2 equations", "subj": "physics", "src": "added"}], period: "school", inRange: true },
+      { day: "Sat", date: "2 May", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}, {"text": "Evening: Lit Paper 2 unseen practice", "subj": "lit", "src": "added"}], period: "school", inRange: true },
+      { day: "Sun", date: "3 May", tasks: [{"text": "Chemistry Paper 2", "subj": "chem", "src": "original"}], period: "school", inRange: true }
     ]
   },
   {
-    label: "Back to School · 22 Apr – 2 May",
-    schoolWeek: true,
+    label: "4 May \u2013 10 May",
+    type: "school",
     days: [
-      { day: "Mon", date: "22 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Maths flashcards", subj: "maths" }
-      ]},
-      { day: "Tue", date: "23 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Bio Paper 1 review", subj: "bio" }
-      ]},
-      { day: "Wed", date: "24 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Macbeth quotes", subj: "macbeth" }
-      ]},
-      { day: "Thu", date: "25 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Geography Paper 1 key terms", subj: "geog" }
-      ]},
-      { day: "Fri", date: "26 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: rest / light flashcards", subj: "default" }
-      ]},
-      { day: "Sat", date: "27 Apr", tasks: [
-        { text: "Maths practice paper (Paper 1)", subj: "maths" },
-        { text: "Art exam prep", subj: "art" }
-      ]},
-      { day: "Sun", date: "28 Apr", tasks: [
-        { text: "English Lit: Macbeth essay practice", subj: "lit" },
-        { text: "Bio: past paper questions", subj: "bio" }
-      ]},
+      { day: "Mon", date: "4 May", tasks: [{"text": "Physics Paper 2 sit paper", "subj": "physics", "src": "original"}], period: "school", inRange: true },
+      { day: "Tue", date: "5 May", tasks: [{"text": "Bank Holiday", "subj": "default", "special": "special", "src": "added"}, {"text": "Final light revision", "subj": "default", "src": "added"}], period: "school", inRange: true },
+      { day: "Wed", date: "6 May", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}], period: "school", inRange: true },
+      { day: "Thu", date: "7 May", tasks: [{"text": "⚠️ English Language Spoken (TBC)", "subj": "english", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Fri", date: "8 May", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}], period: "school", inRange: true },
+      { day: "Sat", date: "9 May", tasks: [{"text": "School day", "subj": "default", "special": "school", "src": "added"}], period: "school", inRange: true },
+      { day: "Sun", date: "10 May", tasks: [{"text": "Light revision – rest focus", "subj": "default", "src": "added"}], period: "school", inRange: true }
     ]
   },
   {
-    label: "Back to School · 29 Apr – 4 May",
-    schoolWeek: true,
+    label: "11 May \u2013 17 May",
+    type: "school",
     days: [
-      { day: "Mon", date: "29 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Geog case studies", subj: "geog" }
-      ]},
-      { day: "Tue", date: "30 Apr", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: History – Migrants essay plan", subj: "history" }
-      ]},
-      { day: "Wed", date: "1 May", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Chem Paper 1 flashcards", subj: "chem" }
-      ]},
-      { day: "Thu", date: "2 May", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: English Lang Paper 1 practice Q", subj: "english" }
-      ]},
-      { day: "Fri", date: "3 May", tasks: [
-        { text: "School day", subj: "default", special: "school" },
-        { text: "Evening: Lit Paper 2 – unseen poem practice", subj: "lit" }
-      ]},
-      { day: "Sat", date: "4 May", tasks: [
-        { text: "Physics Paper 1 sit paper", subj: "physics" },
-        { text: "Revise Paper 1 & practice papers", subj: "physics" }
-      ]},
-      { day: "Sun", date: "5 May", tasks: [
-        { text: "⚠️ Exams start today", subj: "default", special: "special" },
-        { text: "Rest & final prep", subj: "default" }
-      ]},
+      { day: "Mon", date: "11 May", tasks: [{"text": "Final prep: Lit Paper 1", "subj": "lit", "src": "added"}], period: "school", inRange: true },
+      { day: "Tue", date: "12 May", tasks: [{"text": "⚠️ English Lit Paper 1 09:00", "subj": "lit", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Wed", date: "13 May", tasks: [{"text": "⚠️ Biology Paper 1 13:30", "subj": "bio", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Thu", date: "14 May", tasks: [{"text": "⚠️ Geography Paper 1 09:00", "subj": "geog", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Fri", date: "15 May", tasks: [{"text": "⚠️ Maths Non-Calc 09:00", "subj": "maths", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Sat", date: "16 May", tasks: [{"text": "⚠️ Music Performing & Composing", "subj": "music", "special": "special", "src": "added"}, {"text": "⚠️ History Migrants 09:00", "subj": "history", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Sun", date: "17 May", tasks: [{"text": "Rest & recover", "subj": "default", "src": "added"}], period: "school", inRange: true }
     ]
   },
   {
-    label: "Exam Period · 6 – 16 May",
-    schoolWeek: true,
+    label: "18 May \u2013 24 May",
+    type: "school",
     days: [
-      { day: "Mon", date: "6 May", tasks: [
-        { text: "Evening: History Elizabethan review", subj: "history" }
-      ]},
-      { day: "Tue", date: "7 May", tasks: [
-        { text: "Evening: Maths calc practice", subj: "maths" }
-      ]},
-      { day: "Wed", date: "8 May", tasks: [
-        { text: "Evening: Geog Paper 2 case studies", subj: "geog" }
-      ]},
-      { day: "Thu", date: "9 May", tasks: [
-        { text: "Evening: English Lang Paper 2 practice", subj: "english" }
-      ]},
-      { day: "Fri", date: "10 May", tasks: [
-        { text: "Evening: Music listening past papers", subj: "music" }
-      ]},
-      { day: "Sat", date: "11 May", tasks: [
-        { text: "Bio Paper 2 – full revision", subj: "bio" }
-      ]},
-      { day: "Sun", date: "12 May", tasks: [
-        { text: "History USA – past paper questions", subj: "history" }
-      ]},
+      { day: "Mon", date: "18 May", tasks: [{"text": "Evening: Chem Paper 1 final review", "subj": "chem", "src": "added"}], period: "school", inRange: true },
+      { day: "Tue", date: "19 May", tasks: [{"text": "⚠️ Chemistry Paper 1 09:00", "subj": "chem", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Wed", date: "20 May", tasks: [{"text": "⚠️ English Lit Paper 2 09:00", "subj": "lit", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Thu", date: "21 May", tasks: [{"text": "⚠️ English Language Paper 1 09:00", "subj": "english", "special": "special", "src": "added"}], period: "school", inRange: true },
+      { day: "Fri", date: "22 May", tasks: [], period: "school", inRange: true },
+      { day: "Sat", date: "23 May", tasks: [{"text": "Physics Paper 1 flashcards", "subj": "physics", "src": "original"}, {"text": "Sit paper", "subj": "physics", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Sun", date: "24 May", tasks: [{"text": "Pinpoint", "subj": "default", "src": "original"}, {"text": "Paper 2 Geography", "subj": "geog", "src": "original"}], period: "halfterm2", inRange: true }
     ]
   },
   {
-    label: "Exam Period · 13 – 19 May",
-    schoolWeek: true,
+    label: "25 May \u2013 31 May",
+    type: "halfterm2",
     days: [
-      { day: "Mon", date: "13 May", tasks: [
-        { text: "Evening: Maths Paper 3 prep", subj: "maths" }
-      ]},
-      { day: "Tue", date: "14 May", tasks: [
-        { text: "Evening: Geog Paper 3 pre-release", subj: "geog" }
-      ]},
-      { day: "Wed", date: "15 May", tasks: [
-        { text: "Evening: Chem Paper 2 flashcards", subj: "chem" }
-      ]},
-      { day: "Thu", date: "16 May", tasks: [
-        { text: "Evening: Physics Paper 2 equations", subj: "physics" }
-      ]},
-      { day: "Fri", date: "17 May", tasks: [
-        { text: "Evening: rest / light review", subj: "default" }
-      ]},
-      { day: "Sat", date: "18 May", tasks: [
-        { text: "Chem Paper 2 – sit paper", subj: "chem" }
-      ]},
-      { day: "Sun", date: "19 May", tasks: [
-        { text: "Physics Paper 2 – sit paper", subj: "physics" }
-      ]},
+      { day: "Mon", date: "25 May", tasks: [{"text": "History (Middle East & Elizabethan)", "subj": "history", "src": "original"}, {"text": "Past Paper questions", "subj": "default", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Tue", date: "26 May", tasks: [{"text": "Sit English Lang Paper 2", "subj": "english", "src": "original"}, {"text": "Bio paper 2 flashcards", "subj": "bio", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Wed", date: "27 May", tasks: [{"text": "Music Listening revision", "subj": "music", "src": "original"}, {"text": "Bio Paper 2 sit paper", "subj": "bio", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Thu", date: "28 May", tasks: [{"text": "History USA – Pinpoint", "subj": "history", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Fri", date: "29 May", tasks: [{"text": "Geography Paper 3 pre-release", "subj": "geog", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Sat", date: "30 May", tasks: [{"text": "Chemistry Paper 2", "subj": "chem", "src": "original"}], period: "halfterm2", inRange: true },
+      { day: "Sun", date: "31 May", tasks: [{"text": "Physics Paper 2", "subj": "physics", "src": "original"}, {"text": "Revise Paper 1 & practice papers", "subj": "physics", "src": "original"}], period: "halfterm2", inRange: true }
     ]
   },
   {
-    label: "Half Term 2 · 26 – 30 May",
-    halfTerm: true,
+    label: "1 Jun \u2013 7 Jun",
+    type: "exam",
     days: [
-      { day: "Mon", date: "26 May", tasks: [
-        { text: "Maths Paper 3 full sit", subj: "maths" },
-        { text: "Review weak areas", subj: "default" }
-      ]},
-      { day: "Tue", date: "27 May", tasks: [
-        { text: "Geog Paper 3 pre-release deep read", subj: "geog" }
-      ]},
-      { day: "Wed", date: "28 May", tasks: [
-        { text: "Chem Paper 2 final review", subj: "chem" },
-        { text: "Physics Paper 2 equations drill", subj: "physics" }
-      ]},
-      { day: "Thu", date: "29 May", tasks: [
-        { text: "Past paper morning: History USA", subj: "history" },
-        { text: "Bio Paper 2 afternoon review", subj: "bio" }
-      ]},
-      { day: "Fri", date: "30 May", tasks: [
-        { text: "Rest day — light flashcards only", subj: "default" }
-      ]},
+      { day: "Mon", date: "1 Jun", tasks: [{"text": "Final prep: Physics Paper 1", "subj": "physics", "src": "added"}], period: "exam", inRange: true },
+      { day: "Tue", date: "2 Jun", tasks: [{"text": "⚠️ Physics Paper 1 09:00", "subj": "physics", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Wed", date: "3 Jun", tasks: [{"text": "⚠️ Maths Calculator 09:00", "subj": "maths", "special": "special", "src": "added"}, {"text": "⚠️ Geography Paper 2 13:30", "subj": "geog", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Thu", date: "4 Jun", tasks: [{"text": "⚠️ History: ME & Elizabethan 09:00", "subj": "history", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Fri", date: "5 Jun", tasks: [{"text": "⚠️ English Language Paper 2 09:00", "subj": "english", "special": "special", "src": "added"}, {"text": "⚠️ Music Appraising 13:30", "subj": "music", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Sat", date: "6 Jun", tasks: [], period: "exam", inRange: true },
+      { day: "Sun", date: "7 Jun", tasks: [{"text": "Final prep: Bio Paper 2", "subj": "bio", "src": "added"}], period: "exam", inRange: true }
     ]
   },
+  {
+    label: "8 Jun \u2013 14 Jun",
+    type: "exam",
+    days: [
+      { day: "Mon", date: "8 Jun", tasks: [], period: "exam", inRange: true },
+      { day: "Tue", date: "9 Jun", tasks: [{"text": "⚠️ Biology Paper 2 09:00", "subj": "bio", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Wed", date: "10 Jun", tasks: [{"text": "⚠️ History USA 13:30", "subj": "history", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Thu", date: "11 Jun", tasks: [{"text": "⚠️ Maths Calculator H 09:00", "subj": "maths", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Fri", date: "12 Jun", tasks: [{"text": "⚠️ Geography Paper 3 09:00", "subj": "geog", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Sat", date: "13 Jun", tasks: [{"text": "⚠️ Chemistry Paper 2 09:00", "subj": "chem", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Sun", date: "14 Jun", tasks: [], period: "exam", inRange: true }
+    ]
+  },
+  {
+    label: "15 Jun \u2013 16 Jun",
+    type: "exam",
+    days: [
+      { day: "Mon", date: "15 Jun", tasks: [], period: "exam", inRange: true },
+      { day: "Tue", date: "16 Jun", tasks: [{"text": "⚠️ Physics Paper 2 09:00 🎉 LAST EXAM!", "subj": "physics", "special": "special", "src": "added"}], period: "exam", inRange: true },
+      { day: "Wed", date: "17 Jun", tasks: [], period: "normal", inRange: false },
+      { day: "Thu", date: "18 Jun", tasks: [], period: "normal", inRange: false },
+      { day: "Fri", date: "19 Jun", tasks: [], period: "normal", inRange: false },
+      { day: "Sat", date: "20 Jun", tasks: [], period: "normal", inRange: false },
+      { day: "Sun", date: "21 Jun", tasks: [], period: "normal", inRange: false }
+    ]
+  }
 ];
+
+
+
+
+
 
 const examsBefore = [
   "Art exam",
@@ -845,66 +727,154 @@ function renderTimetable() {
   const container = document.getElementById('weeks-container');
   container.innerHTML = '';
 
-  weeks.forEach((week, wi) => {
-    const block = document.createElement('div');
-    block.className = 'week-block';
+  const today = new Date(); today.setHours(0,0,0,0);
 
-    // Count tasks in this week
+  // Column headers (fixed)
+  const headerRow = document.createElement('div');
+  headerRow.style.cssText = 'display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px;margin-bottom:4px;position:sticky;top:0;z-index:10;background:var(--bg);padding-bottom:2px;';
+  headerRow.innerHTML = '<div></div>' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d =>
+    `<div style="text-align:center;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-light);padding:4px 0;">${d}</div>`
+  ).join('');
+  container.appendChild(headerRow);
+
+  const typeStyles = {
+    easter:   { bg: '#fef9ee', border: '#fcd34d', badge: '🐣 Easter',    badgeBg: '#fef3e2', badgeColor: '#92400e' },
+    halfterm: { bg: '#fdf8e3', border: '#f5c842', badge: '🏖 Half Term', badgeBg: '#fdf8e3', badgeColor: '#7a5800' },
+    halfterm2:{ bg: '#fdf8e3', border: '#f5c842', badge: '🏖 Half Term', badgeBg: '#fdf8e3', badgeColor: '#7a5800' },
+    school:   { bg: '#f5f8ff', border: '#c3d4fa', badge: '🏫 School',    badgeBg: '#e8f0fe', badgeColor: '#1a3a8a' },
+    exam:     { bg: '#fff5f5', border: '#fca5a5', badge: '📝 Exams',     badgeBg: '#fee2e2', badgeColor: '#991b1b' },
+    normal:   { bg: 'white',   border: 'var(--border)', badge: '', badgeBg: '', badgeColor: '' },
+  };
+
+  weeks.forEach((week, wi) => {
+    const ts = typeStyles[week.type] || typeStyles.normal;
+
+    // Count tasks
     let totalTasks = 0, doneTasks = 0;
     week.days.forEach((d, di) => {
       d.tasks.forEach((t, ti) => {
+        if (!d.inRange) return;
         totalTasks++;
         if (state.tasks[taskKey(wi, di, ti)]) doneTasks++;
       });
     });
 
-    const gridClass = week.halfTerm ? 'days-grid half-term-grid' : week.schoolWeek ? 'days-grid school-week-grid' : 'days-grid';
-    const htBadge = week.halfTerm ? '<span style="font-size:0.75rem;background:#fdf8e3;color:#7a5800;padding:3px 10px;border-radius:99px;border:1px solid #f5c842;font-weight:600;">🏖 Half Term</span>' : week.schoolWeek ? '<span style="font-size:0.75rem;background:#e8f0fe;color:#1a3a8a;padding:3px 10px;border-radius:99px;border:1px solid #6c8ede;font-weight:600;">🏫 School + Evening</span>' : '';
-    block.innerHTML = `
-      <div class="week-label">
-        <h2>${week.label}</h2>
-        ${htBadge}
-        <div class="divider"></div>
-        <div class="week-stat">${doneTasks}/${totalTasks} done</div>
-      </div>
-      <div class="${gridClass}" id="grid-${wi}"></div>
+    const weekRow = document.createElement('div');
+    weekRow.style.cssText = 'display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px;margin-bottom:4px;align-items:stretch;';
+
+    // Week label cell
+    const labelCell = document.createElement('div');
+    labelCell.style.cssText = `
+      background:${ts.bg};
+      border:1.5px solid ${ts.border};
+      border-radius:8px;
+      padding:8px 6px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:4px;
     `;
-    container.appendChild(block);
+    labelCell.innerHTML = `
+      <div style="font-size:0.65rem;font-weight:700;color:var(--ink);line-height:1.3;">${week.label}</div>
+      ${ts.badge ? `<span style="font-size:0.58rem;background:${ts.badgeBg};color:${ts.badgeColor};padding:1px 5px;border-radius:4px;font-weight:600;display:inline-block;">${ts.badge}</span>` : ''}
+      ${totalTasks > 0 ? `<div style="font-size:0.6rem;color:var(--ink-light);">${doneTasks}/${totalTasks}</div>` : ''}
+    `;
+    weekRow.appendChild(labelCell);
 
-    const grid = document.getElementById(`grid-${wi}`);
-
+    // Day cells
     week.days.forEach((d, di) => {
-      const card = document.createElement('div');
-      card.className = 'day-card';
+      const cell = document.createElement('div');
 
-      let bodyHTML = '';
+      // Is today?
+      const [dayNum, mon] = d.date.split(' ');
+      const monMap = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+      const cellDate = new Date(2026, monMap[mon], parseInt(dayNum));
+      const isToday = cellDate.getTime() === today.getTime();
+      const isPast  = cellDate < today;
+
+      if (!d.inRange) {
+        cell.style.cssText = 'background:transparent;border-radius:8px;min-height:80px;';
+        weekRow.appendChild(cell);
+        return;
+      }
+
+      cell.style.cssText = `
+        background:${isToday ? 'var(--highlight-soft)' : (isPast ? '#fafaf8' : 'white')};
+        border:1.5px solid ${isToday ? 'var(--highlight)' : ts.border};
+        border-radius:8px;
+        overflow:hidden;
+        min-height:80px;
+        display:flex;
+        flex-direction:column;
+        opacity:${isPast && !isToday ? '0.65' : '1'};
+      `;
+
+      // Date header
+      const hdr = document.createElement('div');
+      hdr.style.cssText = `
+        padding:3px 6px;
+        font-size:0.65rem;
+        font-weight:700;
+        color:${isToday ? 'var(--accent)' : 'var(--ink-light)'};
+        border-bottom:1px solid ${isToday ? 'var(--highlight)' : ts.border};
+        background:${isToday ? 'rgba(245,200,66,0.2)' : 'rgba(0,0,0,0.02)'};
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      `;
+      const dateNum = d.date.split(' ')[0];
+      hdr.innerHTML = `<span>${dateNum}</span>${isToday ? '<span style="font-size:0.55rem;background:var(--accent);color:white;padding:1px 4px;border-radius:3px;">TODAY</span>' : ''}`;
+      cell.appendChild(hdr);
+
+      // Tasks
+      const body = document.createElement('div');
+      body.style.cssText = 'padding:4px;display:flex;flex-direction:column;gap:3px;flex:1;';
+
       if (d.tasks.length === 0) {
-        bodyHTML = `<div class="empty-day"><span>—</span></div>`;
+        body.innerHTML = '<div style="flex:1;display:flex;align-items:center;justify-content:center;"><span style="font-size:0.6rem;color:var(--border);">—</span></div>';
       } else {
         d.tasks.forEach((t, ti) => {
           const key = taskKey(wi, di, ti);
           const done = state.tasks[key] ? 'done' : '';
           const special = t.special === 'special' ? 'event-special' : t.special === 'school' ? 'event-school' : '';
           const sClass = special || subjClass(t.subj);
-          bodyHTML += `
-            <div class="task-item ${sClass} ${done}" onclick="toggleTask('${key}', this)">
-              <div class="task-cb"></div>
-              <span>${t.text}</span>
-            </div>`;
+          const taskEl = document.createElement('div');
+          taskEl.className = `task-item ${sClass} ${done}`;
+          taskEl.onclick = () => { toggleTask(key, taskEl); };
+          // src badge
+          let srcBadge = '';
+          const isLiveExam = t.text.startsWith('⚠️');
+          if (isLiveExam) {
+            // Check if exam is today or in the past
+            const monMap = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+            const [dn, mn] = d.date.split(' ');
+            const examD = new Date(2026, monMap[mn], parseInt(dn));
+            examD.setHours(0,0,0,0);
+            const todayD = new Date(); todayD.setHours(0,0,0,0);
+            if (examD.getTime() === todayD.getTime()) {
+              srcBadge = '<span style="font-size:0.5rem;background:#dc2626;color:white;padding:0 4px;border-radius:3px;margin-left:2px;flex-shrink:0;font-weight:700;animation:pulse 1s infinite;" title="Exam today!">LIVE</span>';
+            } else if (examD < todayD) {
+              srcBadge = '<span style="font-size:0.5rem;background:#e5f2eb;color:#1e6b3e;border:1px solid #a7d7b8;padding:0 3px;border-radius:3px;margin-left:2px;flex-shrink:0;" title="Exam done">✓</span>';
+            } else {
+              srcBadge = '<span style="font-size:0.5rem;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:0 3px;border-radius:3px;margin-left:2px;flex-shrink:0;" title="Exam day">📝</span>';
+            }
+          } else if (t.src === 'holiday') {
+            srcBadge = '<span style="font-size:0.5rem;background:#fef3e2;color:#92400e;border:1px solid #fcd34d;padding:0 3px;border-radius:3px;margin-left:2px;flex-shrink:0;" title="Holiday revision">🐣</span>';
+          } else if (t.src === 'added') {
+            srcBadge = '<span style="font-size:0.5rem;background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;padding:0 3px;border-radius:3px;margin-left:2px;flex-shrink:0;" title="Added by Claude">+</span>';
+          }
+          taskEl.innerHTML = `<div class="task-cb"></div><span style="flex:1;min-width:0;">${t.text}</span>${srcBadge}`;
+          body.appendChild(taskEl);
         });
       }
-
-      card.innerHTML = `
-        <div class="day-header">
-          <span>${d.day}</span>
-          <span class="day-date">${d.date}</span>
-        </div>
-        <div class="day-body">${bodyHTML}</div>
-      `;
-      grid.appendChild(card);
+      cell.appendChild(body);
+      weekRow.appendChild(cell);
     });
+
+    container.appendChild(weekRow);
   });
 }
+
 
 function renderExams() {
   const container = document.getElementById('exam-lists-container');
@@ -1356,6 +1326,133 @@ function parseExamDate(dateStr) {
 }
 
 let examTableRendered = false;
+
+function renderExamTable() {
+  if (examTableRendered) return;
+  examTableRendered = true;
+
+  const container = document.getElementById('examtable-container');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const written = examTimetable.filter(e => !e.coursework);
+  const upcoming = written.filter(e => parseExamDate(e.date) >= today).length;
+  const done = written.filter(e => parseExamDate(e.date) < today).length;
+  const nextExam = written.find(e => parseExamDate(e.date) >= today);
+  const daysToNext = nextExam ? Math.round((parseExamDate(nextExam.date) - today) / 86400000) : null;
+
+  // Build summary bar
+  let html = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;">';
+  html += '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px 20px;flex:1;min-width:110px;"><div style="font-family:\'DM Serif Display\',serif;font-size:2rem;line-height:1;">' + upcoming + '</div><div style="font-size:0.7rem;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;">Ahead</div></div>';
+  html += '<div style="background:var(--green-soft);border:1.5px solid var(--green);border-radius:10px;padding:14px 20px;flex:1;min-width:110px;"><div style="font-family:\'DM Serif Display\',serif;font-size:2rem;line-height:1;color:var(--green);">' + done + '</div><div style="font-size:0.7rem;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;">Done</div></div>';
+  if (nextExam) {
+    const dl = daysToNext === 0 ? 'TODAY' : daysToNext === 1 ? 'Tomorrow' : daysToNext + ' days';
+    html += '<div style="background:var(--ink);border-radius:10px;padding:14px 20px;flex:3;min-width:200px;display:flex;align-items:center;gap:16px;">';
+    html += '<div style="font-family:\'DM Serif Display\',serif;font-size:2rem;line-height:1;color:var(--highlight);white-space:nowrap;">' + dl + '</div>';
+    html += '<div><div style="color:white;font-size:0.85rem;font-weight:600;">' + nextExam.subject + '</div><div style="color:rgba(255,255,255,0.55);font-size:0.75rem;margin-top:2px;">' + nextExam.paper.replace(/\(.*?\)/g,'').trim() + ' · ' + nextExam.date + ' 2026</div></div>';
+    html += '</div>';
+  }
+  html += '</div>';
+
+  // Group exams by month
+  const groups = {};
+  examTimetable.forEach(e => {
+    const mo = e.date.split(' ')[2];
+    if (!groups[mo]) groups[mo] = [];
+    groups[mo].push(e);
+  });
+
+  const monthOrder = ['May','Jun'];
+  monthOrder.forEach(mo => {
+    if (!groups[mo]) return;
+    html += '<div style="margin-bottom:32px;">';
+    html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">';
+    html += '<h3 style="font-family:\'DM Serif Display\',serif;font-size:1.3rem;">' + mo + ' 2026</h3>';
+    html += '<div style="flex:1;height:1px;background:var(--border);"></div>';
+    html += '</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+
+    let lastDate = '';
+    groups[mo].forEach(e => {
+      const c2 = etColors[e.subject] || { bg: '#f5f5f5', color: '#444', border: '#ddd' };
+      const examDate = parseExamDate(e.date);
+      const isPast = examDate < today;
+      const isToday = examDate.getTime() === today.getTime();
+
+      const isNewDate = e.date !== lastDate;
+      lastDate = e.date;
+
+      const rowStyle = [
+        'display:flex',
+        'align-items:stretch',
+        'gap:0',
+        'border-radius:10px',
+        'overflow:hidden',
+        'border:1.5px solid ' + (isToday ? 'var(--highlight)' : 'var(--border)'),
+        'opacity:' + (isPast ? '0.4' : '1'),
+        'background:' + (isToday ? 'var(--highlight-soft)' : 'white'),
+        'transition:box-shadow 0.15s',
+      ].join(';');
+
+      // Date column
+      const dateStr = isNewDate ? e.date.split(' ').slice(0,2).join(' ') : '';
+      const yearStr = isNewDate ? '2026' : '';
+
+      html += '<div style="' + rowStyle + '">';
+
+      // Left accent bar
+      html += '<div style="width:5px;background:' + c2.color + ';flex-shrink:0;"></div>';
+
+      // Date block
+      html += '<div style="width:80px;flex-shrink:0;padding:12px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--border);background:' + (isToday ? 'rgba(245,200,66,0.15)' : '#fafaf8') + ';">';
+      if (isNewDate) {
+        const dp = e.date.split(' ');
+        html += '<div style="font-size:1.4rem;font-family:\'DM Serif Display\',serif;line-height:1;color:var(--ink);">' + dp[1] + '</div>';
+        html += '<div style="font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-light);">' + dp[0] + ' ' + dp[2] + '</div>';
+      }
+      html += '</div>';
+
+      // Time block
+      html += '<div style="width:64px;flex-shrink:0;padding:12px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--border);">';
+      if (e.coursework) {
+        html += '<div style="font-size:0.6rem;text-align:center;background:#f0f0f0;padding:3px 5px;border-radius:4px;color:#666;line-height:1.3;">Course-<br>work</div>';
+      } else {
+        html += '<div style="font-size:0.85rem;font-weight:600;color:var(--ink);">' + e.time + '</div>';
+      }
+      html += '</div>';
+
+      // Subject + paper
+      html += '<div style="flex:1;padding:12px 14px;display:flex;flex-direction:column;justify-content:center;min-width:0;">';
+      html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px;">';
+      html += '<span style="background:' + c2.bg + ';color:' + c2.color + ';border:1px solid ' + c2.border + ';padding:2px 9px;border-radius:5px;font-size:0.72rem;font-weight:600;white-space:nowrap;">' + e.subject + '</span>';
+      if (isToday) html += '<span style="background:var(--highlight);color:#7a5800;padding:2px 8px;border-radius:5px;font-size:0.68rem;font-weight:700;">TODAY</span>';
+      html += '</div>';
+      html += '<div style="font-size:0.8rem;color:var(--ink-light);">' + e.paper + '</div>';
+      html += '</div>';
+
+      // Board + duration
+      html += '<div style="flex-shrink:0;padding:12px 14px;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:4px;">';
+      html += '<span style="font-size:0.7rem;background:var(--bg);border:1px solid var(--border);padding:2px 7px;border-radius:4px;color:var(--ink-light);">' + e.board + '</span>';
+      html += '<span style="font-size:0.75rem;color:var(--ink-light);">' + (e.coursework ? '—' : (e.duration || '—')) + '</span>';
+      html += '</div>';
+
+      html += '</div>';
+    });
+
+    html += '</div></div>';
+  });
+
+  html += '<p style="font-size:0.72rem;color:var(--ink-light);margin-top:8px;">* Coursework/portfolio submissions — confirm exact dates with school. Source: Bristol Cathedral Choir School timetable, Francis Grindle.</p>';
+
+  container.innerHTML = html;
+}
+
+function parseExamDate(dateStr) {
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const parts = dateStr.trim().split(' ');
+  const day = parseInt(parts[1]);
+  const mon = months[parts[2]];
+  return new Date(2026, mon, day);
+}
 
 function renderExamTable() {
   if (examTableRendered) return;
