@@ -158,6 +158,10 @@
     max-width: 400px;
   }
 
+  .school-week-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
   .day-card {
     background: var(--surface);
     border: 1.5px solid var(--border);
@@ -184,20 +188,23 @@
 
   .day-date { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
 
-  .day-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+  .day-body { padding: 6px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
 
   .task-item {
     display: flex;
     align-items: flex-start;
-    gap: 7px;
-    padding: 5px 8px;
+    gap: 5px;
+    padding: 4px 6px;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s;
-    font-size: 0.78rem;
-    line-height: 1.35;
+    font-size: 0.7rem;
+    line-height: 1.28;
     border: 1px solid transparent;
     user-select: none;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
   }
 
   .task-item:hover { opacity: 0.85; }
@@ -208,16 +215,17 @@
   }
 
   .task-cb {
-    width: 14px;
-    height: 14px;
-    min-width: 14px;
+    width: 12px;
+    height: 12px;
+    min-width: 12px;
     border-radius: 3px;
     border: 1.5px solid currentColor;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 1px;
-    font-size: 9px;
+    font-size: 8px;
+    flex-shrink: 0;
     transition: all 0.15s;
   }
 
@@ -417,9 +425,12 @@
 <body>
 
 <header>
-  <div>
-    <div class="header-meta">GCSE Revision · May 2025</div>
-    <h1>Frankie's <span>Revision</span></h1>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCADIAMgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC2jMHbHUFf5kVmXjFNQfHGX/nV0yAyZGfmGf5Gs/WCVvFfsygn8DX5rNan6UmLpvNq8Z5xK6/+PH/GvIdcUpod6p4Kgj8jivWdPbElyvpNu/MA15X4q3x22qIAMrM6kHuNxr1cg0rzXoeHnqvTg/Us/BQ503VFyc+Zng/7FUbDB0HxdET9y5mbH1qb4MHNrqyZI5DD/vmqmnNk+MYe3myHH4V9K1++qfI+cT/dx+Zl/CZwPGEOTjMDf0r2v4dEHR7g8Am4k5zj/lo1eG/CuQx+MbQ4z+6f+Qr3H4fAL4eldiEHnS9Tx/rGOaxzVXk/l+ppgX7v3kniqE3OjzjgksuM/d/GqnhzVtHxcade2sNjdWUfmxTBdvmIOoI7/hVXxX4hSzY28MUUxFwI/wB8pKt6kAdRWdqU2mS6gJJrdLtdu2KVxsiU45TA649s461eEioR5ai3KrK+sWReGtAmTxLJrsNxBdxXMzPMIzzCSdwBH6e1e2+D5NnjLQkxtP2lcj/gLV5J4eVPDeqQmOQKZvkWFM87vVsjcR7V6t4bnhk8R6FqIeNYjcRsTu5UZwd3+NevQg5YmEk7nj5hKMcFVVraP8j39WIApGcg1l2XiXw9eJG0GrWz522gBuQemD6dK2JwPsryQbZG2Epg5BOOOlejKEoP3lY+LpVIV0/ZTTt2af5EPmV8zeOtXfUPEl7HFdPIhuPmyOC4/u+3+Ar13RfiDbS6zJoWs232O8WJmBzhW2qSR7HANeF33mJqU92scSxyOzqI23YDZIGa+kyrDTw85ua6I+PzXGUsZGnKDvvo9HfToMhufJdYkBZ0BLIq5ye2arlrtXLyQrEfRj8xJznH5VYsXkMU9yPMg2DaNozvzzgk9gP6VS80SuEnIRh0I5z6g16rkeXCGr0NS4hF1AilXC264ZwOqj7365Maruis8ixXayRxtLt2BgBkcDHHvj8OaqxT3MabVjbJbcDtJyvcAegzn8KDDdSYmu0EUQcuxlPJxjAA/IVDkbKbyK7Zbt3dtKaARi4aJ8M+Ccn2qKKG7t5Ud7eQO3BDDnOR1/CtXTX00j93cTIn2oExkjI43fiMZ/Sq8l+089xywGCR9Bx+f+FWmmjmlzQk1bRjpHNxA8ylUaMeZg9SMbR/Oo4YQ7kNKS2duc4B/wD1Uy4VXkYJj/WjH+7jkGqZnmGTCu4qTlQe44qlKy1FGDloi9bzN5ksMgU7DtPzcEjqfpRUEaMYjI1oW8x2XPTYSAMY+popSrKNkz0MJlUsWnKPQ0sAPkHjfgfQjj+dVdWXdtb0XIq1IPLXg52sPyBqC8xsXPbg1/M9Xoz+vImbYORdXC9tqN/Mf0rzTx3+61DWYicKZCw/EA/1r0iP5dSbH3XiI/Jv/r15t8TT5eq3pPSWNGz/AMBA/pXp5G/9qfmv1R4+dr/Z0+z/AEY34LsRFqmOSf8A4mqemMqaz4whI+8GI+uDVj4NMP8AiaISAOD/AOO1U08/8Vn4miwT5kbYA78Cvp5fxqny/Q+YXwQ+ZH8I9IurjXLG62ogaORky4DMg4LY9M8ZOO+M12uu602n2ejaPujSVzvIkySCTgZ9yc+3FYfg+5bSfDSiZJEvHQQNkglIlyQOOnUn8KoC3tvtnnz3wwjlg6jOR1x70qj9pVcpbI6KUfZ0kluzchsL+9vobZU+02LlmkTzsNDKowck8iIPPN9bXKxW80BmaORVt5I+YwcqxJHq44Ix2q54h1a1stNsodNid4w7HcrAOThWLE+rZHsBWnaW9s2qWJmM0Rm2puYgs2OABjmrWvVFuT5XqbPi65vLqbT7YGaGNJFdI5NwUHpgjBzjPFU/CHiuTw5c3c8aWt0jW5RY7mPeodumcEZGM9+9bj6FrE+qaVHcXEVxFI6KI0kZWYMSB04GD1OO1XfEMthp+px24u7q4TGWU7AHPYkHHpkZ9v5ehGblJxemhzzUVG0jUvfE41KG0hWySx+3JJ5otz8u0/dCBsgHp0z2rz3xHNq/h5tQF1JBqF3dFt8kkJUQqAQEC7sH3Pb0/HduPEFhZ6fAstoEeKQPEoLMWbPyg8nGBxms/xJrNtqPguZNQ09bHUYr6T7OyEqJYs/K25eD0JJ7A9+MaKnGpHTbrc55ycdWO0nWJLG80qWM+SLq2ljm+XjAySQR0+9k9+lbXhLRbfVL+28UfaZ1imuVm2xgbH+b7xJzn6evXiuBt9RgXVreMhECBVlRWZfZeh9K9J8MXFtpOlwtpkzSSTJIdrmMqVJOGGCBxkfhScYwkm1bX+v8yznnfmiztfEl5dafe2GxpWsb9GiGX4jYdBz2OetXtL1K/s7ZEnnijKs6rsj4J9cntXCfEDU5Jl0eHSrqJWNzNJPIj4AKRqv8Q4HzMevXJrHm8ReIbKOO3stVkt4xkNtA3MMdc4zmsp4eVaSS2XmW6sYq66nodxqzG5E14ZkjGF2x9W98dKsWWtwy3P71igRf3cq5APpx6Vj+GLTULt7Ke5kluJpI0JDzBmI7en1puoJHZaqkdwEt1MgAGeSvrkc1iqcm7W3LnOnbXU9j8M+K9ItW863mSdmTaHQ5Ax7dOlaA8baDqCBLiZoXf8AiaM4/McV59YW2i+INHu7AX81uJoH+zneuY+mVOOMjPFc7peo/wBl+Kv7LFpFItpMI9oUBHIOCOg4xnH0NVPDpq8SIYiUXaT0PW7+28Paupi1K0tLx1OQZkDsD9cc1y178NfDd3+/trOPT5T0e0JQA+6ggfpW1Y2k8enxvA5FxGvyOOSCO9N1e2u9Q0+5t7G5SC5ZeJGXIz6fSuH2NaEuVpnVGdOcbppnnniH4YX1jAbvw7eJI2Sf7OuJCHH+43Qj2JzXl/iLTdS0K7Ni2n31nGxBiOVmifkbdjAHI+vTHFe7+GY7/S/PsLmeSS6hlKb5DuLZ5ypxxwf0rqI9DtY41gWJXVVCguMnAr0MJmOPo+5Ums9n/W3kclXDYadrxWr7Hn/wAHfhzd6Hpc2tazBLBf3n7tYpkdXjj9WB4+Y/oB716nFE0e+Q8KBsDehAz/ADIqxZafFBGUiX5FbG0duvSrctrFKkY2jB3bieSSf8ABX55muNqY3EyrVN3+h7uFoQoUlTgjMlQyxhRjmP5fQjB/lU0cCqp3jblSGCjoRgr/QU3yuePu5G3g/d/T9KVcM4B6kkZzXBsbbkaZhAMH3kH8hRTcmRsnJ+bv6cUVQhxJLH1k/lXHfEX/j/tm/6YEf8Ajxrs1+8fq1cb8Sv+P2y/64H/ANCNdeC/ifI48X/CZzVjzGxqVWS+RnXH8VZqymucxNm3OGz9K9y+D5LaTdYHSRcf98mvCLeTbMgPrXvHwckQ6LdAH5vMVvwyBXBmS5aN33PQyt81VrzR6LcQw3ZYhGkHUDGK8n+Jfwi1LWdVl1jw/fW8V1IP3ttclkEnH3w+Dgn36e9ezqm0qXbbknIHvUSYJbzEOPlzjvj/wDVXg0atSjLnp6M9mpShVjyzVz5C8VeCtf8IeV/bNlJCsmdk6sHjf8A3WH9K5SSOQ5KfxAjH1r71vbCzu12z20UoH98A4+hrjdW+EvgPVpGkl0VbKVurmzkMGf+AZAP4ivZo55paq6PJrZWr3gz4/e1dnBmwJAO4rwKz7oMi7FyB7V9daj+z9oLo7aXrd5E3JCXUauD7Hbg/pXA+IP2cbmO3kl0DWoZn/hgu0MT/8AfajOa9inmmCl8Vj53EZXjabvFXPniSGPiKBOQAMnvWdfWxjfayZUjseTXrHiH4S+NvCkyvqGiTyRr/y8WuJlP4jn8RXGXGmXyTFp7SYFuS8alz+le/h6kJRvF3PEr0pxfLJHjXxPQJ4hhPDFoQT78VP8J9Mk1HxX5sZHlWkRkbHcscD9Ca3viHZa3Y6vp6XbXm67iMqiTd+7wQR16d66f4d6HHoeh38NzHie5k3l8YJXHGfxJrqoVowdRy2sfRUaScfd2Z0fivU7vT7C60n7c01mVZYEkAOwcHr3rxjVddstGRhe3CifvGpyR+Fdz8QZbhNMuJ7a5EJQeU6n78b+n6V4RrUM+oOyXF3JMx43GvIxlSpVl7vzPRoUo04u5vReN/7Uu7SGe1it9rj5A2ZOuASM8e/SvSfDl/dMpS2jaaeOHLKGHygcjA6Yyy4Hf14rw8aTqMDw3M80sOwjMfJ9+p9q9D+HWvx20gM2oTJF9nkDNsUlWxwMkA9a5pQTVzao+VJnpPhi2urfUJY7uFYpXfzI5bdhsOecc8jGK9w8EJbXGmakbIJHDJKjFfvFj0bJ/OvmXxN4uvbCO1vbVDdvb8mJm2YPf5h0P4c10Pg74n/wBla7bpfTTSm7wgCyMNkuCBlMbQD6jPatXRf+XQm7dT6kV41iuN20BHUD+tL4jthqHhfU7YAEU28kgHqoJP8iKreHBbz2NreIqKl3AkgPo2MH+VaIjd/KkxuUoQVA6DB/wrz6kbTkn1OqD9xGTqQjsNMtbWJFRdkYGPpVDwZ4sj0bxPpMy/L9nuBJx3UHn+Wa1JZFv9Wa1ZVdLcswPQMRxj9K5ZoryCzuWMZmFncCUxr1O3sfyrVtxp8p5kZ+1x7uv/h0u56b4kF9N4Z0u7sD5d0YXkLt0PlgYOPfivAr7xz4z0Xw/GlhfXjI8e5fPjEqg+m5s5HvX074F0G08XeH4dRiHkzQ5hnibgqy9CPce3auR8d+CtB0vQ9W/tma5tJraQrFbhWl8/BGMDqODyT0Hp0ru4fzN4SpOnVi3Ba26o8jPMDHMKMakFaSZ8ctrN1Nrd5PfMl5OXd5fPCGNmf+8Ae2cY9OK9F8B+MFgvhca3pYl0+RgrFAqzRMf7ue3PfPHpW/4P8AC1p4N0G7N8Ya3p1pPaYSWN2k81Swz83LD0x+lJKvSq6vS+q7fgazoSjCcZae7r3/AOGOu0+4uNS0+OaDVJVtrqNHFm0ql4WYZUA9cD1rZ1OW0vbBYnkiuBHGiOzxA78AfdzxXkngXxTcaaZNB3OBb4WBJO3tjrj3r0y2i8y3DxuUBUZAPp1r07JxTR4WKhKnNxk7mR/ZNqb5bl4/nQEKe2K15WS2t87sqAevOazLp54bKaRVkaVVJjYjbz9Kw9FttR1JrqS4JSCO3aQPn5mPpgcge5quZdGedOMk0dFb2v2xHgVMhV5B4zjt7GsbWrS50e3jVBsiY/Kf4ga5eDxdcLqs8MFuklqBhGkJJ6dSB9K0LlZrqFXuopGiHyliQRk/wCf8Ki8bkTjLlak+5ePjW4VjEkU4B4bfz9eMVHqfiuEgr5Drkf8tDtP4cVznhfULbWNRk07yXaWaRvJckAMQMjI9c459a7LSfC0jN/pU0MO7+GOPzHHpyMAfpScYRVmzPmUpJ20L1j4o1C4JWKSFgPRcfzp174h1m33tLJFsPVeB/StWx8O6fCm6S2iZ+2VBIHQD8sVz3jC9Ntp7WOmjybeXKSzAdeeg9e9HKiXJkH2mS9gkklRkk5+Zscf0rP0nxMx8Qpb3M5+yKGhVW+6R3+ue9aul+Hb+4K3VpqckyN0XzDz+GQKXxN4Bs9YtRCrT2k6DEciykfmO/wCtZ1IpcyXcXM7J2Or0zVNMks2e3nWQkAM4bJPvjrzUiapbr8rFUJOQ2OeK4I+EtR0iGC0g1m8Z5WxIpYttA9x3pJvCuvPJJC13NN5SZmCTEL+H9QK5ZYaDfvc36nZTxVSEb8nvdHbXP2mWN5IEKoQMhuo9BVSHzLecykbg6A9ecdRWTY6fq0FpHBb3eFCgqHyccc8d/8AParMlnqEDzNJMyJJyAuCFJ5HNEIcrE6zehtTmS3t5bhwAjHGc9xVHUbp2tmjjA3jAbcO3X/9VWDBdrZ3DGVXj4YBSCR+PSoYTDLJGJoVlHK5yCOQKSRG7OauHlRZkRZAyE5GCc46dPeuct7OKa8DW6OjKXHl57+p+laM9x9n1eUNMvmSH5ApGF9gR+VWLZQ6xxBjKoYM27tgE0bG0G2tBsNlHYOPs4y3qxBwPY1x3iKa4t9WjeaECIMAHJ9Djp9K9Ka3t2Ro3mBbI27Rj1z+FeV+KzqGoyyQ2dtHLHDJhpZjwPUAdqUpWRrVio2YxdQ0a2EW1JZpTgrI/IX6D2rM8Qa9Na3PlvCswTtHjBrIOl38rETWrCNeq7wT+VaeleGSz/ANqXUkkUYb5fmw7Y+v8AnrUJW1IdRN2RVjv/APRXm+zzpcxtuUOemTzjv7fStC0+H8l+6Syfari5mBUqspVSuehA6kH09K2tZTSYl8pCBuXJVhnDe4rnNWvtVijlubMHYDiNz0znqCPepai2JL2j5TL1Lwle2spi/dXBB5YjY35e9Z0mhy2gLvDMAe4wc0ouLy4hVpLpFlJIMi9V+mKF0i/kJ+0bJAT3PJrNvqbxpws7mqul6jNHGbWN1BJDcAgf4VFc6LqTjH9mTKe+YWq7p1heaYNthLHJE4/eqTnjJ4A/OulXxJpumrEmoNBvYH7SsaAkHtjb9PzrlqVJQ2OpU4yWp5re6LeWsxSe0ljcHHzRlf5iisLVfiNrWv+MNVlE7WGmm9m+z2cTYVEL4A9yBjJorvjmk2veSPPlk8L2iz7NkDM5yeh/kaqX4MkBVFDBWBPsN2TU4HlhQOpb+VVNQYC2bLbfLByT2wc17NKbU0z2ZwUotGX5xN3cIw4EbfXvWHqMwjVix9TV4zmS7nUf3G49Oaz9T2y5HUKEX35Ga4Kb95nO3Y5Ym4luvVf6V9AfBqzW18HLMVAe7mMpI7joPxx+leAWJDXajHDMAfyFe9fCa4C+GY7Qne1sSOvDK2SP6g/jXFm0r00vM7Mv0m35Hf6DGXnKdCOcH3NR+LPl8N3RLbcFOcZ/jFOs2WFI9p4z09Kj8UMsnh27KnIUoRnr96vDiuZWZ7E3aLPMPH/hWHxDp8LXPlG6tJFkiWTocfxAfj+leWal8H9HvNSmfSruW0nPzNbzHfHux2IP8q96vrIXtqIjMY9jZBA6kHIwaxbgQ6JdC5hYi3c5lX+63qKuVOT3OenWcNjw6X4OXkJe8v7a5uy3Bijk3K3ruJ4x71yN18GPHk1xNe6baBbOSQsrzXLK2B6KOgzX1wmpW1yYGdRcxujyAyKSAq9sjpyKzZ7CW/0e5udOuHtb2PMiLjK544I6VjKLi1exs5xktbHz+nws8T+HfD7X0lxJJdRx7hHFJyR3JY5zXAfZ75ZhLFb7DuztLEj6GvpH4j/DLVdBPhfV7m+WfT7m+j3xMCHjLHBwe/vXn0Dw6aqaXbtFHrVsBbXGwZVk6Yz6jocfzr2MLiHGCi3qj4fOcIqtaVSnqpfqUvBHhbx94oufs5W306OMgz3tzHhVHp7k+gBr6o+Hng6w8F+H7bSrd2lfbvnnb/lpKwBZj6fQcDpXivwO09tQuPEEFw7D7DcR2t1I3VpEbc4J9FZQR7rXvWksz2scjnLHgsSM59c18dn1Z1sSoLZH0mV01SpuT3Zr6fZPEFldfmiGGBH8q5rxx4PsfFum3FrPbR/bZrR4YbgA+YhIP6Hg10sDorAk4RVwMCqfivxjoXhi0jfU/kLqWjhBO5V7Eg8cV8tGjU9rypa9D6Kth6lSmqaTu0fE994e1ax1K4sdS01reS3Plsm7JGOwzjFcbr3g7XNOQX0mhXotkBZpmiLqM9flAzivpTWfG+ga7NPdWOnQxWLrugnJBllZuuVz04HI71xc89wl4Hg8/yE4iWQ4cjryvY15eOwNeE/aQm0n87HJXwtSMObm16dPv8zmZPD2u3ttZDTrS4jgs4VgghPPyqOT9T6V6B4Y8N3mnQi3u5JGjGf3bKvzVt+DdHvNQ0sXGqMsBvELJbg7iFx1Jxxx0xxXfaBYQ2lm4hhRCW+ZlXBzjnnvXq5dlFZz56rdn0Oetio0oqnFa93+R5f4v8AhV4d8V6Y8k1uLO/VCZZ4CVbj0/xBFfPniTwzd+Gr86LqMbrcW5JxIhLsmeH+mck/TFfcM9sjMzpw+PlPpXIeM/CmneJbBreWGEX4H7m5OMEjp9DXrcOcSVcNXVGrJuh+XT0OHHYNSSqw+Jf1seTeENXt/Deja7La6fKZruSN5DICSB5uOmB9K9Y8C3lrZeDtIlgsgLmaBWVY8AbQOpPf614v488KL4R1AWpkklEkPmIzEbgMgfMO3OR9K6bwVqrW8FtZWbyR3NiirHPJkBguemMZOB1r6bG4KVTE+2XuuS06eQ8LOM6fsXqr39ep7t4YnlktpormIPGW5cDJ3duSa3bmeOZY7lGZt7B3UNgHPXg9K8C0Xxx4rsPHk2jaN/Zl7Pcui/Y5IJC7bfvMrAgcDqBzwAOa9o0zWru0tmN5bRM+SqMkm8H8gRj+VfGYvB1MJVcJo+noupGTpT3XQv68rTaFfqqEL5ZXH1BqlZXuq2WlW0c4RRHGqZPO7HfitK9u4JLSb9y8kzJiPb0VcZLc9K5WQVTX3MV5cXttDboGG3oe+OKtpGl6hkgVQoQMzbh+GfxrHnuFkt5jFJiQ7UBxkAdakgGozRPBPfxLHkA7UycjuTVqyJT0ubVro19GzpHqpWFV3+U0AKknue2PxrJ1nT9WXVlmur2COPaSEVBwuc9c++K0dMm1C2JUahO5cbgVjJVfzHH5VW1e71JN08VxHJJGhKqUYFT+YpJruRNPsb2k6gHtHggjBj2FQ+DuxXNi2vGV7h4TFGqgbeMn1JFRabrEpnea/mWBGXGWYHGPbBrXsdThvZ7W2jBiCjczb+QvfoKl9kRH3nqcJe2F1dpJJ9ncJGH7kk57VQk0ue8h+yXkZiiIA/dqMkdwQfrXqsuk2EkfmMuMdGB+8PeuZbSP7Pe5WymhR3z86PkgduoqWuxtCW6uZi+F7i0tjJDaNJGDuMigZA+ue1aFn4JhtgJnDyl8DY64B+ueKxdT0TV0U+Tqtw8nBO3BI/OuU1LVLqOWS0ub+dtv3hjaTjuMcU+RSVNWI5pu90ely+E7C4KPFMIgMFhx9cfjUpX7JFhkMYBA545Pfk9q43wfrH22eGSNmdD8u0n8q7PVLW7QLJGxHy/P1Hoe341ClHqc81KNlI5PW7OS2mNzcRlArEAH+IduKt6boU9xIJ7hJFQcqvfPqfWtIXcT2z2l5b+ezHdGT1B/Kt7SpTapDHcoMN0B6j3NRK6MJK0izb6PBbwMrDBxjArldfaGKC5YpxuyPxrsJL0MzxuBnAwD1xXD+IbqRDcFSdxbj3rHVvQ1oJuRy7MWR+vFUJlJ3Z7ZrSaE43H0NVJY+Dj8KlxJnHk2L+n2k0lvdGFhGY1B3j7wGcgj3qCxt2e3e/ubxJjJnLqfvEnNPRJTZCCYjEn8J645P0NXdOsVNtNBGD9pTjHcd81tbQydUxpdOigme7uGklJXaFMhC57kf41vaTotpNaLE67iR17fWqGjrNNfSPdLtRflCt0U5rqGm8m+VAAURcDHPJ9Peu6hDkjqfuOQZV9SwCTXvSd36b/P8At7DIbWzs1CrGAF6cZrFuLCC8nuCVaA7tvlv0b37VrK63CSgdOQe3FZNznyrqRiCWHzAcgjr+ldsZJLQ+4qWkixZwx2cC2oijjReRtGPbNZF1FYwavHKlrIsyZeOSNvljzxtFad3ceXZoTCHYrlQe2cVTjiSXVpbORfMRYw8jZ+8fT/PpUylJroYON3cW4jhS5EQtnuJH4OOny89qHsdNkhDLbqCxz8wznP8AnFRxSI0xjj3eZHwd3YDpx60+dYp5oXE8OYwGAf7p7iiMn1MpQbep//Z" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.2);" alt="Frankie">
+    <div>
+      <div class="header-meta">GCSE Revision · Apr–Jun 2026</div>
+      <h1>Frankie's <span>Revision</span></h1>
+    </div>
   </div>
   <div class="progress-bar-wrap">
     <div class="progress-label">
@@ -438,6 +449,7 @@
   <div class="tab active" onclick="switchTab('timetable')">Timetable</div>
   <div class="tab" onclick="switchTab('exams')">Exam Priority</div>
   <div class="tab" onclick="switchTab('revision')">Revision</div>
+  <div class="tab" onclick="switchTab('examtable')">Exam Timetable</div>
 </div>
 
 <div class="container">
@@ -466,6 +478,16 @@
     <div class="exam-lists" id="exam-lists-container"></div>
   </div>
 
+  <!-- EXAM TIMETABLE PANEL -->
+  <div class="panel" id="panel-examtable">
+    <div id="examtable-container"></div>
+  </div>
+
+  <!-- EXAM TIMETABLE PANEL -->
+  <div class="panel" id="panel-examtable">
+    <div id="examtable-container"></div>
+  </div>
+
   <!-- REVISION PANEL -->
   <div class="panel" id="panel-revision">
     <div id="revision-home">
@@ -485,7 +507,7 @@
 
 const weeks = [
   {
-    label: "Week 1 · 30th – 5th",
+    label: "Week 1 · 30 Mar – 5 Apr",
     days: [
       { day: "Mon", date: "30th", tasks: [
         { text: "After school Maths", subj: "maths", special: "school" }
@@ -512,7 +534,7 @@ const weeks = [
     ]
   },
   {
-    label: "Week 2 · 6th – 12th",
+    label: "Week 2 · 6 – 12 Apr",
     days: [
       { day: "Mon", date: "6th", tasks: [
         { text: "English Lit Paper 1 – Poetry anthology practice question", subj: "lit" }
@@ -543,7 +565,7 @@ const weeks = [
     ]
   },
   {
-    label: "Week 3 · 13th – 19th",
+    label: "Week 3 · 13 – 19 Apr",
     days: [
       { day: "Mon", date: "13th", tasks: [
         { text: "School – Music Composition", subj: "music", special: "school" }
@@ -573,7 +595,7 @@ const weeks = [
     ]
   },
   {
-    label: "Half Term · 23rd – 24th",
+    label: "Half Term · 23 – 24 Apr",
     halfTerm: true,
     days: [
       { day: "Sat", date: "23rd", tasks: [
@@ -587,7 +609,7 @@ const weeks = [
     ]
   },
   {
-    label: "Week 5 · 25th Apr – 4th May",
+    label: "Week 5 · 25 Apr – 4 May",
     days: [
       { day: "Mon", date: "25th", tasks: [
         { text: "History (Middle East & Elizabethan)", subj: "history" },
@@ -615,7 +637,153 @@ const weeks = [
         { text: "Revise Paper 1 & practice papers", subj: "physics" }
       ]},
     ]
-  }
+  },
+  {
+    label: "Back to School · 22 Apr – 2 May",
+    schoolWeek: true,
+    days: [
+      { day: "Mon", date: "22 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Maths flashcards", subj: "maths" }
+      ]},
+      { day: "Tue", date: "23 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Bio Paper 1 review", subj: "bio" }
+      ]},
+      { day: "Wed", date: "24 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Macbeth quotes", subj: "macbeth" }
+      ]},
+      { day: "Thu", date: "25 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Geography Paper 1 key terms", subj: "geog" }
+      ]},
+      { day: "Fri", date: "26 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: rest / light flashcards", subj: "default" }
+      ]},
+      { day: "Sat", date: "27 Apr", tasks: [
+        { text: "Maths practice paper (Paper 1)", subj: "maths" },
+        { text: "Art exam prep", subj: "art" }
+      ]},
+      { day: "Sun", date: "28 Apr", tasks: [
+        { text: "English Lit: Macbeth essay practice", subj: "lit" },
+        { text: "Bio: past paper questions", subj: "bio" }
+      ]},
+    ]
+  },
+  {
+    label: "Back to School · 29 Apr – 4 May",
+    schoolWeek: true,
+    days: [
+      { day: "Mon", date: "29 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Geog case studies", subj: "geog" }
+      ]},
+      { day: "Tue", date: "30 Apr", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: History – Migrants essay plan", subj: "history" }
+      ]},
+      { day: "Wed", date: "1 May", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Chem Paper 1 flashcards", subj: "chem" }
+      ]},
+      { day: "Thu", date: "2 May", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: English Lang Paper 1 practice Q", subj: "english" }
+      ]},
+      { day: "Fri", date: "3 May", tasks: [
+        { text: "School day", subj: "default", special: "school" },
+        { text: "Evening: Lit Paper 2 – unseen poem practice", subj: "lit" }
+      ]},
+      { day: "Sat", date: "4 May", tasks: [
+        { text: "Physics Paper 1 sit paper", subj: "physics" },
+        { text: "Revise Paper 1 & practice papers", subj: "physics" }
+      ]},
+      { day: "Sun", date: "5 May", tasks: [
+        { text: "⚠️ Exams start today", subj: "default", special: "special" },
+        { text: "Rest & final prep", subj: "default" }
+      ]},
+    ]
+  },
+  {
+    label: "Exam Period · 6 – 16 May",
+    schoolWeek: true,
+    days: [
+      { day: "Mon", date: "6 May", tasks: [
+        { text: "Evening: History Elizabethan review", subj: "history" }
+      ]},
+      { day: "Tue", date: "7 May", tasks: [
+        { text: "Evening: Maths calc practice", subj: "maths" }
+      ]},
+      { day: "Wed", date: "8 May", tasks: [
+        { text: "Evening: Geog Paper 2 case studies", subj: "geog" }
+      ]},
+      { day: "Thu", date: "9 May", tasks: [
+        { text: "Evening: English Lang Paper 2 practice", subj: "english" }
+      ]},
+      { day: "Fri", date: "10 May", tasks: [
+        { text: "Evening: Music listening past papers", subj: "music" }
+      ]},
+      { day: "Sat", date: "11 May", tasks: [
+        { text: "Bio Paper 2 – full revision", subj: "bio" }
+      ]},
+      { day: "Sun", date: "12 May", tasks: [
+        { text: "History USA – past paper questions", subj: "history" }
+      ]},
+    ]
+  },
+  {
+    label: "Exam Period · 13 – 19 May",
+    schoolWeek: true,
+    days: [
+      { day: "Mon", date: "13 May", tasks: [
+        { text: "Evening: Maths Paper 3 prep", subj: "maths" }
+      ]},
+      { day: "Tue", date: "14 May", tasks: [
+        { text: "Evening: Geog Paper 3 pre-release", subj: "geog" }
+      ]},
+      { day: "Wed", date: "15 May", tasks: [
+        { text: "Evening: Chem Paper 2 flashcards", subj: "chem" }
+      ]},
+      { day: "Thu", date: "16 May", tasks: [
+        { text: "Evening: Physics Paper 2 equations", subj: "physics" }
+      ]},
+      { day: "Fri", date: "17 May", tasks: [
+        { text: "Evening: rest / light review", subj: "default" }
+      ]},
+      { day: "Sat", date: "18 May", tasks: [
+        { text: "Chem Paper 2 – sit paper", subj: "chem" }
+      ]},
+      { day: "Sun", date: "19 May", tasks: [
+        { text: "Physics Paper 2 – sit paper", subj: "physics" }
+      ]},
+    ]
+  },
+  {
+    label: "Half Term 2 · 26 – 30 May",
+    halfTerm: true,
+    days: [
+      { day: "Mon", date: "26 May", tasks: [
+        { text: "Maths Paper 3 full sit", subj: "maths" },
+        { text: "Review weak areas", subj: "default" }
+      ]},
+      { day: "Tue", date: "27 May", tasks: [
+        { text: "Geog Paper 3 pre-release deep read", subj: "geog" }
+      ]},
+      { day: "Wed", date: "28 May", tasks: [
+        { text: "Chem Paper 2 final review", subj: "chem" },
+        { text: "Physics Paper 2 equations drill", subj: "physics" }
+      ]},
+      { day: "Thu", date: "29 May", tasks: [
+        { text: "Past paper morning: History USA", subj: "history" },
+        { text: "Bio Paper 2 afternoon review", subj: "bio" }
+      ]},
+      { day: "Fri", date: "30 May", tasks: [
+        { text: "Rest day — light flashcards only", subj: "default" }
+      ]},
+    ]
+  },
 ];
 
 const examsBefore = [
@@ -690,8 +858,8 @@ function renderTimetable() {
       });
     });
 
-    const gridClass = week.halfTerm ? 'days-grid half-term-grid' : 'days-grid';
-    const htBadge = week.halfTerm ? '<span style="font-size:0.75rem;background:#fdf8e3;color:#7a5800;padding:3px 10px;border-radius:99px;border:1px solid #f5c842;font-weight:600;">🏖 Half Term</span>' : '';
+    const gridClass = week.halfTerm ? 'days-grid half-term-grid' : week.schoolWeek ? 'days-grid school-week-grid' : 'days-grid';
+    const htBadge = week.halfTerm ? '<span style="font-size:0.75rem;background:#fdf8e3;color:#7a5800;padding:3px 10px;border-radius:99px;border:1px solid #f5c842;font-weight:600;">🏖 Half Term</span>' : week.schoolWeek ? '<span style="font-size:0.75rem;background:#e8f0fe;color:#1a3a8a;padding:3px 10px;border-radius:99px;border:1px solid #6c8ede;font-weight:600;">🏫 School + Evening</span>' : '';
     block.innerHTML = `
       <div class="week-label">
         <h2>${week.label}</h2>
@@ -808,7 +976,7 @@ function updateProgress() {
 
   // Traffic light: compare actual % done vs expected % done based on today's date
   const startDate = new Date('2025-03-30');
-  const endDate   = new Date('2025-05-04');
+  const endDate   = new Date('2025-05-30');
   const today     = new Date();
   today.setHours(0,0,0,0);
 
@@ -825,10 +993,12 @@ function updateProgress() {
 
   const delta = pct - expectedPct; // positive = ahead, negative = behind
   let light, label;
-  if (today > endDate) {
+  const endDateCmp = new Date(endDate); endDateCmp.setHours(0,0,0,0);
+  const startDateCmp = new Date(startDate); startDateCmp.setHours(0,0,0,0);
+  if (today >= endDateCmp) {
     light = pct === 100 ? '🟢' : pct >= 80 ? '🟡' : '🔴';
-    label = pct === 100 ? 'Complete!' : 'Exams started';
-  } else if (today < startDate) {
+    label = pct === 100 ? 'Complete!' : 'Exams on — keep going';
+  } else if (today < startDateCmp) {
     light = '⚪';
     label = 'Not started yet';
   } else if (delta >= 5) {
@@ -848,81 +1018,161 @@ function updateProgress() {
 
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach((t, i) => {
-    t.classList.toggle('active', ['timetable','exams','revision'][i] === name);
+    t.classList.toggle('active', ['timetable','exams','revision','examtable'][i] === name);
   });
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById(`panel-${name}`).classList.add('active');
   if (name === 'revision') renderSubjectGrid();
+  if (name === 'examtable') renderExamTable();
 }
 
 // ─── REVISION PAGE ────────────────────────────────────────────────────────────
 
 const subjects = [
   {
-    id: 'maths', label: 'Maths', cls: 'subj-maths', emoji: '📐',
-    topics: ['Number & algebra', 'Ratio & proportion', 'Geometry & measures', 'Probability & statistics', 'Graphs & functions', 'Simultaneous equations', 'Quadratics', 'Trigonometry'],
-    prompt: `You are a GCSE Maths revision assistant. Generate concise revision notes for a GCSE student covering: key formulas to memorise, common exam traps, and one worked example per major topic area (Number, Algebra, Geometry, Statistics). Use bullet points and clear headings. Keep it punchy and exam-focused.`
+    id: 'maths', label: 'Maths', emoji: '📐',
+    cards: [
+      { q: 'Quadratic formula (Pearson Higher)', a: 'x = (−b ± √(b²−4ac)) / 2a\nOn Pearson you MUST show working. Formula given on sheet — but know when to use it.' },
+      { q: 'How do you find the gradient of a line?', a: 'gradient = (y₂ − y₁) / (x₂ − x₁)\nAlso = m in y = mx + c' },
+      { q: 'What is Pythagoras\'s theorem?', a: 'a² + b² = c²\nc is always the hypotenuse (longest side).' },
+      { q: 'Area of a circle?', a: 'A = πr²\nCircumference = 2πr' },
+      { q: 'What is a prime number?', a: 'A number with exactly 2 factors: 1 and itself.\nFirst primes: 2, 3, 5, 7, 11, 13...' },
+      { q: 'How do you calculate percentage change?', a: '(New − Old) / Old × 100\nPositive = increase, negative = decrease.' },
+      { q: 'What are the sine and cosine rules?', a: 'Sine: a/sinA = b/sinB\nCosine: a² = b² + c² − 2bc·cosA' },
+      { q: 'How do you solve simultaneous equations by elimination?', a: 'Make coefficients of one variable equal, then add or subtract to eliminate it. Substitute back to find both values.' },
+    ]
   },
   {
-    id: 'lit', label: 'English Lit', cls: 'subj-lit', emoji: '📖',
-    topics: ['Macbeth – key quotes & themes', 'Power & Conflict poetry anthology', 'A Christmas Carol', 'Pride & Prejudice', 'Unseen poetry technique', 'Context & writer\'s intent'],
-    prompt: `You are a GCSE English Literature revision assistant. Generate concise revision notes covering: Macbeth (key themes, quotes, character analysis), the Power & Conflict poetry anthology (key poems, themes, comparison techniques), and unseen poetry skills. Use bullet points. Focus on what examiners want to see.`
+    id: 'lit', label: 'English Lit', emoji: '📖',
+    cards: [
+      { q: 'What does Macbeth\'s "Stars, hide your fires" reveal?', a: 'His ambition is so strong he wants darkness to conceal his murderous thoughts — showing his awareness of his own moral corruption.' },
+      { q: 'What is the key theme of Power & Conflict poetry?', a: 'Poems explore how power — political, natural, personal — causes and results from conflict. Often shows the cost of war or oppression on individuals.' },
+      { q: 'How does Shakespeare present Lady Macbeth as powerful?', a: '"Unsex me here" — she rejects femininity to pursue power. She manipulates Macbeth using his masculinity against him.' },
+      { q: 'What technique is "Out, damned spot!"?', a: 'Exclamatory sentence + metaphor. Reveals her guilt and breakdown — the blood she cannot wash away symbolises her crime.' },
+      { q: 'In unseen poetry, what should you analyse?', a: 'SMILE: Structure, Meaning, Imagery, Language, Effect on reader. Always link technique to effect and poet\'s intent.' },
+      { q: 'What does "nothing will come of nothing" mean in King Lear / how does it link to Macbeth?', a: 'Macbeth\'s theme: ambition built on "nothing" (prophecy, illusion) leads to destruction. Compare to the witches\' equivocation.' },
+      { q: 'Name 3 key Power & Conflict poems and their themes.', a: 'Ozymandias (pride & decay of power), Charge of the Light Brigade (futility of war), Exposure (nature vs soldiers, suffering).' },
+      { q: 'How do you structure a literature essay paragraph?', a: 'Point → Evidence (quote) → Explain technique → Analyse effect → Link to theme/context (PEEL or similar).' },
+    ]
   },
   {
-    id: 'english', label: 'English Lang', cls: 'subj-english', emoji: '✍️',
-    topics: ['Reading: analysis & inference', 'Language & structure techniques', 'Evaluation questions', 'Descriptive writing', 'Narrative writing', 'Transactional writing', 'Spoken language'],
-    prompt: `You are a GCSE English Language revision assistant. Generate concise revision notes covering: how to approach reading questions (inference, language analysis, structure, evaluation), and writing skills (descriptive, narrative, transactional). Include key techniques to use and what examiners reward. Use bullet points.`
+    id: 'english', label: 'English Lang', emoji: '✍️',
+    cards: [
+      { q: 'What does a Q2 language question require?', a: 'Identify language techniques (metaphor, simile, personification etc.), quote accurately, and explain the effect on the reader. Don\'t just spot — analyse.' },
+      { q: 'What is structural analysis (Q3)?', a: 'How the writer organises the whole text: openings, endings, shifts in focus, shifts in time, perspective, sentence structure patterns.' },
+      { q: 'What makes a strong descriptive opening?', a: 'Drop the reader in — use the senses, avoid clichés, establish atmosphere immediately. Vary sentence length for effect.' },
+      { q: 'What is a fronted adverbial?', a: 'An adverbial phrase at the start of a sentence: "In the darkness, she waited." Followed by a comma. Creates atmosphere or emphasis.' },
+      { q: 'What techniques impress in narrative writing?', a: 'Varied sentence length, figurative language, show don\'t tell, strong verbs, controlled structure, an unexpected twist or circular ending.' },
+      { q: 'What does Q4 (evaluation) ask you to do?', a: 'Do you agree with a statement about the text? Use evidence to support or challenge it. Show you can think critically about the writer\'s choices.' },
+      { q: 'What is the difference between explicit and implicit meaning?', a: 'Explicit = stated directly. Implicit = suggested/implied — you have to infer it from the language or context.' },
+      { q: 'Name 3 persuasive techniques (DAFOREST).', a: 'Direct address (you), Anecdote, Facts, Opinion, Rhetorical questions, Emotive language, Statistics, Triples (rule of three).' },
+    ]
   },
   {
-    id: 'bio', label: 'Biology', cls: 'subj-bio', emoji: '🧬',
-    topics: ['Cell biology', 'Organisation & digestion', 'Infection & response', 'Bioenergetics & photosynthesis', 'Homeostasis', 'Inheritance & genetics', 'Ecology', 'Required practicals'],
-    prompt: `You are a GCSE Biology revision assistant. Generate concise revision notes covering the key topics: cell biology, organisation, infection and response, bioenergetics, homeostasis, inheritance, and ecology. Include key definitions, processes to know, and common exam questions. Use bullet points and clear headings.`
+    id: 'bio', label: 'Biology', emoji: '🧬',
+    cards: [
+      { q: 'What is the difference between mitosis and meiosis?', a: 'Mitosis: produces 2 identical cells (growth/repair). Meiosis: produces 4 genetically different cells (reproduction/gametes).' },
+      { q: 'What is a limiting factor in photosynthesis?', a: 'Light intensity, CO₂ concentration, temperature. Whichever is lowest limits the rate even if others increase.' },
+      { q: 'What do enzymes do and what affects them?', a: 'Biological catalysts that speed up reactions. Affected by temperature and pH — denature if too high.' },
+      { q: 'Aerobic respiration equation (AQA)', a: 'Glucose + Oxygen → Carbon dioxide + Water\nAQA also test anaerobic: Glucose → Lactic acid (animals) or Glucose → Ethanol + CO₂ (yeast)' },
+      { q: 'How does the immune system respond to pathogens?', a: 'White blood cells: phagocytes engulf pathogens; lymphocytes produce antibodies specific to antigens. Memory cells enable faster future response.' },
+      { q: 'What is homeostasis?', a: 'Maintaining a stable internal environment (e.g. body temperature 37°C, blood glucose levels) despite external changes.' },
+      { q: 'What is natural selection?', a: 'Organisms with favourable variations survive, reproduce, and pass on traits. Over time, population adapts to environment (Darwin).' },
+      { q: 'What is the difference between dominant and recessive alleles?', a: 'Dominant (capital letter) always expressed if present. Recessive (lowercase) only expressed if homozygous (two copies).' },
+    ]
   },
   {
-    id: 'chem', label: 'Chemistry', cls: 'subj-chem', emoji: '⚗️',
-    topics: ['Atomic structure & periodic table', 'Bonding & structure', 'Quantitative chemistry', 'Chemical changes', 'Energy changes', 'Rates of reaction', 'Organic chemistry', 'Required practicals'],
-    prompt: `You are a GCSE Chemistry revision assistant. Generate concise revision notes covering: atomic structure, bonding, quantitative chemistry (moles, equations), chemical changes, rates of reaction, and organic chemistry. Include key equations, definitions, and exam tips. Use bullet points and clear headings.`
+    id: 'chem', label: 'Chemistry', emoji: '⚗️',
+    cards: [
+      { q: 'What is the difference between ionic and covalent bonding?', a: 'Ionic: transfer of electrons between metal and non-metal (forms ions). Covalent: sharing of electrons between non-metals.' },
+      { q: 'What is a mole?', a: '6.02 × 10²³ particles. Moles = mass (g) ÷ relative formula mass (Mr).' },
+      { q: 'What affects the rate of a chemical reaction?', a: 'Temperature, concentration, surface area, catalyst, pressure (gases). All increase collision frequency or energy.' },
+      { q: 'What is the difference between exothermic and endothermic?', a: 'Exothermic: releases energy (temperature rises) e.g. combustion. Endothermic: absorbs energy (temperature falls) e.g. thermal decomposition.' },
+      { q: 'What is oxidation and reduction (OILRIG)?', a: 'OIL: Oxidation Is Loss (of electrons). RIG: Reduction Is Gain (of electrons). Happens simultaneously in redox reactions.' },
+      { q: 'What are the properties of Group 1 metals?', a: 'Soft, low density, react vigorously with water (producing H₂ and metal hydroxide). Reactivity increases down the group.' },
+      { q: 'AQA required practical: tests for gases', a: 'CO₂: limewater turns cloudy. O₂: relights glowing splint. H₂: squeaky pop with lit splint. Cl₂: bleaches damp litmus.' },
+      { q: 'What is the structure of an atom?', a: 'Nucleus (protons + neutrons) surrounded by electrons in shells. Atomic number = protons. Mass number = protons + neutrons.' },
+    ]
   },
   {
-    id: 'physics', label: 'Physics', cls: 'subj-physics', emoji: '⚡',
-    topics: ['Energy stores & transfers', 'Electricity & circuits', 'Particle model', 'Atomic structure & radiation', 'Forces & motion', 'Waves', 'Magnetism & electromagnetism', 'Required practicals'],
-    prompt: `You are a GCSE Physics revision assistant. Generate concise revision notes covering: energy, electricity, forces and motion, waves, particle model, atomic structure and radiation, and magnetism. Include key equations to memorise, definitions, and common exam traps. Use bullet points and clear headings.`
+    id: 'physics', label: 'Physics', emoji: '⚡',
+    cards: [
+      { q: 'What is Newton\'s Second Law?', a: 'Force = mass × acceleration (F = ma)\nForce in Newtons, mass in kg, acceleration in m/s².' },
+      { q: 'What is the equation for wave speed?', a: 'wave speed = frequency × wavelength\nv = fλ (m/s = Hz × m)' },
+      { q: 'What is the difference between series and parallel circuits?', a: 'Series: same current throughout, voltage splits. Parallel: voltage same across branches, current splits.' },
+      { q: 'What is the equation for kinetic energy?', a: 'KE = ½mv²\nm = mass (kg), v = velocity (m/s). Energy in Joules.' },
+      { q: 'What is the difference between nuclear fission and fusion?', a: 'Fission: heavy nucleus splits (used in reactors). Fusion: light nuclei join (powers stars). Both release huge energy.' },
+      { q: 'What is Hooke\'s Law?', a: 'Force = spring constant × extension (F = ke)\nOnly applies in the elastic limit — beyond that, spring deforms permanently.' },
+      { q: 'What is specific heat capacity?', a: 'Energy needed to raise 1 kg of a substance by 1°C.\nE = mcΔθ (Joules = kg × J/kg°C × °C)' },
+      { q: 'What is the difference between transverse and longitudinal waves?', a: 'Transverse: oscillation perpendicular to direction (e.g. light). Longitudinal: oscillation parallel to direction (e.g. sound).' },
+    ]
   },
   {
-    id: 'history', label: 'History', cls: 'subj-history', emoji: '🏛️',
-    topics: ['Migration – causes & impact', 'Elizabethan England', 'Middle East conflict', 'History USA', 'Source skills & evaluation', 'Essay structure & argument'],
-    prompt: `You are a GCSE History revision assistant. Generate concise revision notes covering: Migration to Britain (causes, key waves, impact), Elizabethan England (society, threats, culture), the Middle East conflict, and USA history. Include key dates, events, people, and how to structure history exam answers. Use bullet points and clear headings.`
+    id: 'history', label: 'History', emoji: '🏛️',
+    cards: [
+      { q: 'Push/pull factors for migration to Britain (Pearson 1HI0 13)', a: 'Push: war, persecution, famine, poverty. Pull: work, Empire ties, safety, better living. Key waves: Jewish 1880s/1930s, Windrush 1948, South Asian 1960s–70s.' },
+      { q: 'What were the main threats to Elizabethan England?', a: 'Catholic plots (Ridolfi, Throckmorton, Babington), Mary Queen of Scots, Spanish Armada 1588, poverty and vagrancy.' },
+      { q: 'What caused the Arab-Israeli conflict? (Pearson)', a: 'Balfour Declaration 1917, British Mandate, creation of Israel 1948, Arab-Israeli War, Palestinian displacement. Key dates: 1948, 1967 Six Day War, 1973 Yom Kippur War.' },
+      { q: 'What was the significance of the 1967 Six Day War?', a: 'Israel captured West Bank, Gaza, Sinai, Golan Heights. Massively expanded territory. Created ongoing occupation issues still unresolved.' },
+      { q: 'Key features of Elizabethan society?', a: 'Strict social hierarchy, patriarchal, Protestant Church of England, fear of Catholic plots, flourishing arts (Shakespeare), exploration (Drake).' },
+      { q: 'How do you write a strong history essay?', a: 'Clear argument in intro, evidence with specific dates/names, explain significance, acknowledge counterargument, strong conclusion that directly answers the question.' },
+      { q: 'What was the significance of the Spanish Armada (1588)?', a: 'Philip II\'s attempt to invade England failed. English victory due to weather, tactics (fireships at Gravelines). Boosted Elizabeth\'s prestige enormously.' },
+      { q: 'What was the impact of WW2 migration on Britain?', a: 'Windrush generation (1948) filled labour shortages. Faced discrimination (No Blacks signs). Led to Race Relations Acts. Shaped multicultural Britain.' },
+    ]
   },
   {
-    id: 'geog', label: 'Geography', cls: 'subj-geog', emoji: '🌍',
-    topics: ['Natural hazards', 'Living world & ecosystems', 'Physical landscapes (UK)', 'Urban issues & challenges', 'Changing economic world', 'Resource management', 'Fieldwork & map skills'],
-    prompt: `You are a GCSE Geography revision assistant. Generate concise revision notes covering: natural hazards, ecosystems, UK physical landscapes, urban issues, economic development, and resource management. Include key case studies to know, key terms, and exam technique tips. Use bullet points and clear headings.`
+    id: 'geog', label: 'Geography', emoji: '🌍',
+    cards: [
+      { q: 'What is the difference between a earthquake\'s focus and epicentre?', a: 'Focus: point underground where earthquake originates. Epicentre: point on the surface directly above the focus — greatest damage here.' },
+      { q: 'Name a case study for a tropical rainforest and key facts.', a: 'Amazon Rainforest: 5.5 million km², 10% of world\'s species, deforestation for cattle ranching/soy. Threats: logging, mining, road building.' },
+      { q: 'What causes tropical storms (hurricanes/typhoons)?', a: 'Warm ocean water (>27°C) evaporates, rises, cools, condenses. Releases latent heat, air rises faster, low pressure develops, winds spiral inward.' },
+      { q: 'What is the demographic transition model?', a: '5 stages from high birth+death rates to low both. Stage 1: pre-industrial. Stage 5: declining population. UK is Stage 4/5.' },
+      { q: 'What is urban sprawl and what causes it?', a: 'Uncontrolled outward growth of cities into rural areas. Causes: population growth, suburbanisation, cheaper land, car ownership.' },
+      { q: 'What is the difference between an HIC and LIC?', a: 'HIC: High Income Country (e.g. UK, USA) — high GDP, services economy. LIC: Low Income Country (e.g. Chad) — low GDP, agriculture-dependent.' },
+      { q: 'What are the effects of river flooding?', a: 'Social: deaths, displacement. Economic: property damage, business loss. Environmental: water/soil contamination, ecosystem disruption.' },
+      { q: 'What is a composite volcano (stratovolcano)?', a: 'Steep-sided, made of alternating lava and ash layers. Found at destructive plate margins. Explosive eruptions. E.g. Mount Etna, Vesuvius.' },
+    ]
   },
   {
-    id: 'art', label: 'Art', cls: 'subj-art', emoji: '🎨',
-    topics: ['Recording & observational drawing', 'Exploring & developing ideas', 'Refining & presenting work', 'Artist research & annotation', 'Personal response & meaning', 'Exam preparation'],
-    prompt: `You are a GCSE Art revision assistant. Generate concise revision notes covering: what examiners look for (the four assessment objectives), how to annotate sketchbook work effectively, how to write about artist influences, and tips for the exam day. Use bullet points and practical advice.`
+    id: 'art', label: 'Art', emoji: '🎨',
+    cards: [
+      { q: 'What are the 4 GCSE Art assessment objectives?', a: 'AO1: Develop ideas through artists/sources. AO2: Refine work using skills/techniques. AO3: Record observations. AO4: Personal response.' },
+      { q: 'How should you annotate sketchbook work?', a: 'Describe what you did, why you chose it, what worked/didn\'t, what you\'d change, how it links to an artist or theme. Be specific.' },
+      { q: 'How do you write about an artist\'s influence?', a: 'Name + context → describe their technique → show how you applied it → explain why it suits your theme. Include a visual link.' },
+      { q: 'What should your exam day personal response include?', a: 'Clear link to your theme, evidence of AO1–AO4 across the work, refinement from the preparatory period, strong composition and technique.' },
+      { q: 'What is tone and how do you show it?', a: 'Range from light to dark. Show with hatching, cross-hatching, blending, stippling. Creates depth, form and atmosphere.' },
+      { q: 'What is the difference between primary and secondary sources?', a: 'Primary: direct observation (life drawing, own photography). Secondary: found images, other artists\' work. Both should be in sketchbook.' },
+    ]
   },
   {
-    id: 'music', label: 'Music', cls: 'subj-music', emoji: '🎵',
-    topics: ['Musical elements (MADTSHIRT)', 'Set works – listening', 'Western classical tradition', 'Popular music', 'World music', 'Composition techniques', 'Performance tips'],
-    prompt: `You are a GCSE Music revision assistant. Generate concise revision notes covering: the musical elements (melody, rhythm, harmony, texture, structure, dynamics etc.), how to approach the listening exam, key set works to know, and composition techniques. Include exam tips for the listening paper. Use bullet points and clear headings.`
+    id: 'music', label: 'Music', emoji: '🎵',
+    cards: [
+      { q: 'What does MADTSHIRT stand for?', a: 'Melody, Articulation, Dynamics, Tempo, Structure, Harmony, Instrumentation/Texture, Rhythm, Tonality. The musical elements for analysis.' },
+      { q: 'What is a cadence and name the types?', a: 'A harmonic ending. Perfect: V→I (strong close). Imperfect: ends on V (unfinished). Plagal: IV→I (church). Interrupted: V→any not I (surprise).' },
+      { q: 'What is the difference between homophonic and polyphonic texture?', a: 'Homophonic: melody + chords/accompaniment (most pop). Polyphonic: two or more independent melodic lines (e.g. Bach fugue).' },
+      { q: 'What is modulation?', a: 'Changing key within a piece. Common in classical music — often to the dominant (5th above). Creates tension and contrast.' },
+      { q: 'How do you approach a listening exam question?', a: 'Listen once for overview. Second time: focus on what\'s asked (rhythm, texture, instruments). Use correct musical vocabulary. Be specific.' },
+      { q: 'What is the difference between major and minor tonality?', a: 'Major: bright, happy sound. Minor: darker, sadder sound. Determined by the third note of the scale (major 3rd vs minor 3rd).' },
+      { q: 'What is syncopation?', a: 'Accenting the off-beat rather than the main beat. Common in jazz, funk, and much pop music. Creates rhythmic energy and groove.' },
+      { q: 'What is a leitmotif?', a: 'A recurring musical theme associated with a character, place, or idea. Used by composers like Wagner and film composers like John Williams.' },
+    ]
   },
 ];
 
 let activeSubject = null;
-let generatedContent = {};
+let currentCardIndex = 0;
+let cardFlipped = false;
 
 function renderSubjectGrid() {
   const grid = document.getElementById('subject-grid');
-  if (grid.innerHTML) return; // already rendered
+  if (grid.innerHTML) return;
   subjects.forEach(s => {
     const card = document.createElement('div');
     card.style.cssText = `cursor:pointer;background:white;border:1.5px solid var(--border);border-radius:10px;padding:18px 14px;display:flex;flex-direction:column;gap:8px;transition:box-shadow 0.15s;`;
     card.innerHTML = `
       <div style="font-size:1.8rem;">${s.emoji}</div>
       <div style="font-weight:600;font-size:0.9rem;">${s.label}</div>
-      <div style="font-size:0.72rem;color:var(--ink-light);">${s.topics.length} topics</div>
+      <div style="font-size:0.72rem;color:var(--ink-light);">${s.cards.length} flashcards</div>
     `;
     card.onmouseenter = () => card.style.boxShadow = '0 4px 16px rgba(0,0,0,0.09)';
     card.onmouseleave = () => card.style.boxShadow = 'none';
@@ -933,67 +1183,247 @@ function renderSubjectGrid() {
 
 function openSubject(s) {
   activeSubject = s;
+  currentCardIndex = 0;
+  cardFlipped = false;
   document.getElementById('revision-home').style.display = 'none';
   document.getElementById('revision-detail').style.display = 'block';
+  renderFlashcards();
+}
 
+function renderFlashcards() {
+  const s = activeSubject;
   const inner = document.getElementById('revision-detail-inner');
-
-  // Topics list
-  const topicsHTML = s.topics.map(t => `<li style="padding:5px 0;border-bottom:1px solid var(--border);font-size:0.85rem;">${t}</li>`).join('');
-
   inner.innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
       <span style="font-size:2rem;">${s.emoji}</span>
-      <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;">${s.label}</h2>
+      <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;flex:1;">${s.label} Flashcards</h2>
+      <span style="font-size:0.78rem;color:var(--ink-light);background:var(--surface);border:1px solid var(--border);padding:4px 12px;border-radius:99px;" id="card-counter">1 / ${s.cards.length}</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
-      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:18px;">
-        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-light);margin-bottom:12px;">Key Topics</div>
-        <ul style="list-style:none;padding:0;margin:0;">${topicsHTML}</ul>
-      </div>
-      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:18px;">
-        <div style="font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-light);margin-bottom:12px;">Revision Notes</div>
-        <div id="ai-content">
-          ${generatedContent[s.id]
-            ? `<div style="font-size:0.84rem;line-height:1.7;">${generatedContent[s.id]}</div>`
-            : `<button onclick="generateNotes('${s.id}')" style="background:var(--ink);color:white;border:none;border-radius:8px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;font-weight:500;">✨ Generate revision notes</button>`
-          }
+
+    <style>
+      .flashcard-scene { width:100%;max-width:580px;margin:0 auto 24px;height:220px;perspective:1000px;cursor:pointer; }
+      .flashcard-inner { position:relative;width:100%;height:100%;transition:transform 0.5s;transform-style:preserve-3d; }
+      .flashcard-scene.flipped .flashcard-inner { transform:rotateY(180deg); }
+      .flashcard-face { position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:28px;text-align:center; }
+      .flashcard-front { background:var(--ink);color:white;box-shadow:0 8px 32px rgba(0,0,0,0.18); }
+      .flashcard-back { background:var(--green-soft);border:2px solid var(--green);transform:rotateY(180deg); }
+      .flashcard-front .label { font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;opacity:0.5;margin-bottom:14px; }
+      .flashcard-front .question { font-family:'DM Serif Display',serif;font-size:1.25rem;line-height:1.4; }
+      .flashcard-back .answer { font-size:0.9rem;line-height:1.6;color:var(--ink);white-space:pre-line; }
+      .fc-hint { font-size:0.72rem;color:var(--ink-light);text-align:center;margin-bottom:20px; }
+      .fc-nav { display:flex;align-items:center;justify-content:center;gap:12px; }
+      .fc-btn { background:white;border:1.5px solid var(--border);border-radius:8px;padding:9px 20px;font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;font-weight:500;transition:all 0.15s; }
+      .fc-btn:hover { background:var(--ink);color:white;border-color:var(--ink); }
+      .fc-btn:disabled { opacity:0.3;cursor:default; }
+      .fc-dots { display:flex;gap:5px;align-items:center; }
+      .fc-dot { width:7px;height:7px;border-radius:50%;background:var(--border); }
+      .fc-dot.active { background:var(--ink); }
+    </style>
+
+    <div class="fc-hint">👆 Click the card to reveal the answer</div>
+
+    <div class="flashcard-scene" id="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-face flashcard-front">
+          <div>
+            <div class="label">Question ${currentCardIndex + 1}</div>
+            <div class="question" id="fc-question">${s.cards[currentCardIndex].q}</div>
+          </div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="answer" id="fc-answer">${s.cards[currentCardIndex].a}</div>
         </div>
       </div>
     </div>
+
+    <div class="fc-nav">
+      <button class="fc-btn" id="fc-prev" onclick="prevCard()" ${currentCardIndex === 0 ? 'disabled' : ''}>← Prev</button>
+      <div class="fc-dots" id="fc-dots"></div>
+      <button class="fc-btn" id="fc-next" onclick="nextCard()" ${currentCardIndex === s.cards.length - 1 ? 'disabled' : ''}>Next →</button>
+    </div>
   `;
+  renderDots();
 }
 
-async function generateNotes(subjectId) {
-  const s = subjects.find(x => x.id === subjectId);
-  const aiDiv = document.getElementById('ai-content');
-  aiDiv.innerHTML = `<div style="font-size:0.82rem;color:var(--ink-light);display:flex;align-items:center;gap:8px;"><span style="display:inline-block;animation:spin 1s linear infinite;">⏳</span> Generating notes…</div>`;
+function renderDots() {
+  const s = activeSubject;
+  const dots = document.getElementById('fc-dots');
+  if (!dots) return;
+  dots.innerHTML = s.cards.map((_, i) =>
+    `<div class="fc-dot ${i === currentCardIndex ? 'active' : ''}"></div>`
+  ).join('');
+}
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: s.prompt,
-        messages: [{ role: 'user', content: `Generate GCSE revision notes for ${s.label}. Use HTML formatting: <h4> for section headings, <ul><li> for bullet points, <strong> for key terms. Keep it concise and exam-focused.` }]
-      })
-    });
+function flipCard() {
+  cardFlipped = !cardFlipped;
+  const scene = document.getElementById('flashcard-scene');
+  if (scene) scene.classList.toggle('flipped', cardFlipped);
+}
 
-    const data = await response.json();
-    const text = data.content?.find(b => b.type === 'text')?.text || 'Could not generate notes.';
-    generatedContent[subjectId] = text;
-    aiDiv.innerHTML = `<div style="font-size:0.84rem;line-height:1.7;">${text}</div>`;
-  } catch(e) {
-    aiDiv.innerHTML = `<div style="font-size:0.82rem;color:var(--accent);">Something went wrong. Try again.</div>`;
+function nextCard() {
+  if (currentCardIndex < activeSubject.cards.length - 1) {
+    currentCardIndex++;
+    cardFlipped = false;
+    updateCard();
   }
+}
+
+function prevCard() {
+  if (currentCardIndex > 0) {
+    currentCardIndex--;
+    cardFlipped = false;
+    updateCard();
+  }
+}
+
+function updateCard() {
+  const s = activeSubject;
+  const scene = document.getElementById('flashcard-scene');
+  const q = document.getElementById('fc-question');
+  const a = document.getElementById('fc-answer');
+  const counter = document.getElementById('card-counter');
+  const prev = document.getElementById('fc-prev');
+  const next = document.getElementById('fc-next');
+  if (!scene || !q) return;
+  scene.classList.remove('flipped');
+  setTimeout(() => {
+    q.textContent = s.cards[currentCardIndex].q;
+    a.textContent = s.cards[currentCardIndex].a;
+    if (counter) counter.textContent = `${currentCardIndex + 1} / ${s.cards.length}`;
+    if (prev) prev.disabled = currentCardIndex === 0;
+    if (next) next.disabled = currentCardIndex === s.cards.length - 1;
+    renderDots();
+  }, 260);
 }
 
 function backToSubjects() {
   document.getElementById('revision-home').style.display = 'block';
   document.getElementById('revision-detail').style.display = 'none';
 }
+
+
+// ─── EXAM TIMETABLE ──────────────────────────────────────────────────────────
+
+const examTimetable = [
+  { date: 'Thu 7 May',  time: 'TBC',   subject: 'English Language', paper: 'Spoken Language (8700/C)',              board: 'AQA',     coursework: true  },
+  { date: 'Mon 11 May', time: '09:00', subject: 'English Lit',      paper: 'Paper 1 (8702/1)',                      board: 'AQA',     duration: '1h 45m' },
+  { date: 'Tue 12 May', time: '13:30', subject: 'Biology',          paper: 'Paper 1 Tier H (8461/1H)',              board: 'AQA',     duration: '1h 45m' },
+  { date: 'Wed 13 May', time: '09:00', subject: 'Geography',        paper: 'Paper 1 (8035/1)',                      board: 'AQA',     duration: '1h 30m' },
+  { date: 'Thu 14 May', time: '09:00', subject: 'Maths',            paper: 'Non Calculator H (1MA1 1H)',            board: 'Pearson', duration: '1h 30m' },
+  { date: 'Fri 15 May', time: 'TBC',   subject: 'Music',            paper: 'Performing (1MU0 01)',                  board: 'Pearson', coursework: true  },
+  { date: 'Fri 15 May', time: 'TBC',   subject: 'Music',            paper: 'Composing (1MU0 02)',                   board: 'Pearson', coursework: true  },
+  { date: 'Fri 15 May', time: '09:00', subject: 'History',          paper: 'Migrants in Britain (1HI0 13)',         board: 'Pearson', duration: '1h 20m' },
+  { date: 'Mon 18 May', time: '09:00', subject: 'Chemistry',        paper: 'Paper 1 Tier H (8462/1H)',              board: 'AQA',     duration: '1h 45m' },
+  { date: 'Tue 19 May', time: '09:00', subject: 'English Lit',      paper: 'Paper 2 (8702/2)',                      board: 'AQA',     duration: '2h 15m' },
+  { date: 'Thu 21 May', time: '09:00', subject: 'English Language', paper: 'Paper 1 (8700/1)',                      board: 'AQA',     duration: '1h 45m' },
+  { date: 'Sun 31 May', time: 'TBC',   subject: 'Art & Design',     paper: 'Fine Art Portfolio (8202/C)',           board: 'AQA',     coursework: true  },
+  { date: 'Sun 31 May', time: 'TBC',   subject: 'Art & Design',     paper: 'Fine Art Externally Set (8202/X)',      board: 'AQA',     duration: '10h 00m' },
+  { date: 'Tue 2 Jun',  time: '09:00', subject: 'Physics',          paper: 'Paper 1 Tier H (8463/1H)',              board: 'AQA',     duration: '1h 45m' },
+  { date: 'Wed 3 Jun',  time: '09:00', subject: 'Maths',            paper: 'Calculator H (1MA1 2H)',                board: 'Pearson', duration: '1h 30m' },
+  { date: 'Wed 3 Jun',  time: '13:30', subject: 'Geography',        paper: 'Paper 2 (8035/2)',                      board: 'AQA',     duration: '1h 30m' },
+  { date: 'Thu 4 Jun',  time: '09:00', subject: 'History',          paper: 'Middle East & Elizabethan (1HI0 2W)',   board: 'Pearson', duration: '1h 50m' },
+  { date: 'Thu 4 Jun',  time: '09:00', subject: 'History',          paper: 'Early Elizabethan (1HI0 B4)',           board: 'Pearson', duration: '-'      },
+  { date: 'Thu 4 Jun',  time: '09:00', subject: 'History',          paper: 'Middle East (1HI0 P5)',                 board: 'Pearson', duration: '-'      },
+  { date: 'Fri 5 Jun',  time: '09:00', subject: 'English Language', paper: 'Paper 2 (8700/2)',                      board: 'AQA',     duration: '1h 45m' },
+  { date: 'Fri 5 Jun',  time: '13:30', subject: 'Music',            paper: 'Appraising (1MU0 03)',                  board: 'Pearson', duration: '1h 45m' },
+  { date: 'Mon 8 Jun',  time: '09:00', subject: 'Biology',          paper: 'Paper 2 Tier H (8461/2H)',              board: 'AQA',     duration: '1h 45m' },
+  { date: 'Tue 9 Jun',  time: '13:30', subject: 'History',          paper: 'The USA (1HI0 33)',                     board: 'Pearson', duration: '1h 30m' },
+  { date: 'Wed 10 Jun', time: '09:00', subject: 'Maths',            paper: 'Calculator H (1MA1 3H)',                board: 'Pearson', duration: '1h 30m' },
+  { date: 'Thu 11 Jun', time: '09:00', subject: 'Geography',        paper: 'Paper 3 (8035/3)',                      board: 'AQA',     duration: '1h 30m' },
+  { date: 'Fri 12 Jun', time: '09:00', subject: 'Chemistry',        paper: 'Paper 2 Tier H (8462/2H)',              board: 'AQA',     duration: '1h 45m' },
+  { date: 'Mon 15 Jun', time: '09:00', subject: 'Physics',          paper: 'Paper 2 Tier H (8463/2H)',              board: 'AQA',     duration: '1h 45m' },
+];
+
+const etColors = {
+  'English Language': { bg: '#fce8f3', color: '#9d174d', border: '#f8b4d9' },
+  'English Lit':      { bg: '#fce8f3', color: '#9d174d', border: '#f8b4d9' },
+  'Biology':          { bg: '#e5f2eb', color: '#1e6b3e', border: '#a7d7b8' },
+  'Geography':        { bg: '#e5f7f0', color: '#1a6b50', border: '#8ad4b8' },
+  'Maths':            { bg: '#e8f0fe', color: '#1a56db', border: '#c3d4fa' },
+  'Music':            { bg: '#fdf5e8', color: '#7a4e00', border: '#f5d498' },
+  'History':          { bg: '#fdf0e3', color: '#8a4a00', border: '#f5c88a' },
+  'Chemistry':        { bg: '#e5f0fa', color: '#1c4a8a', border: '#a9c8ef' },
+  'Physics':          { bg: '#e8f7ff', color: '#0e5c8a', border: '#90d2f0' },
+  'Art & Design':     { bg: '#f5e8ff', color: '#6a1e9e', border: '#d4a8f5' },
+};
+
+function parseExamDate(dateStr) {
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const parts = dateStr.trim().split(' ');
+  const day = parseInt(parts[1]);
+  const mon = months[parts[2]];
+  return new Date(2026, mon, day);
+}
+
+let examTableRendered = false;
+
+function renderExamTable() {
+  if (examTableRendered) return;
+  examTableRendered = true;
+
+  const container = document.getElementById('examtable-container');
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  const written = examTimetable.filter(e => !e.coursework);
+  const upcoming = written.filter(e => parseExamDate(e.date) >= today).length;
+  const done = written.filter(e => parseExamDate(e.date) < today).length;
+  const nextExam = written.find(e => parseExamDate(e.date) >= today);
+  const daysToNext = nextExam ? Math.round((parseExamDate(nextExam.date) - today) / 86400000) : null;
+  const nextLabel = nextExam ? nextExam.subject + ' – ' + nextExam.paper.split('(')[0].trim() : '';
+
+  let summaryHTML = '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;">';
+  summaryHTML += '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px 20px;flex:1;min-width:120px;"><div style="font-family:\'DM Serif Display\',serif;font-size:1.8rem;line-height:1;color:var(--ink);">' + upcoming + '</div><div style="font-size:0.72rem;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;">Exams ahead</div></div>';
+  summaryHTML += '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:14px 20px;flex:1;min-width:120px;"><div style="font-family:\'DM Serif Display\',serif;font-size:1.8rem;line-height:1;color:var(--green);">' + done + '</div><div style="font-size:0.72rem;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;">Completed</div></div>';
+  if (daysToNext !== null) {
+    const dLabel = daysToNext === 0 ? 'Today!' : daysToNext + ' days';
+    summaryHTML += '<div style="background:var(--ink);border:1.5px solid var(--ink);border-radius:10px;padding:14px 20px;flex:2;min-width:200px;"><div style="font-family:\'DM Serif Display\',serif;font-size:1.8rem;line-height:1;color:var(--highlight);">' + dLabel + '</div><div style="font-size:0.72rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;">Next: ' + nextLabel + '</div></div>';
+  }
+  summaryHTML += '</div>';
+
+  let tableHTML = '<div style="background:white;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;overflow-x:auto;">';
+  tableHTML += '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;min-width:600px;">';
+  tableHTML += '<thead><tr style="background:var(--ink);color:white;">';
+  ['Date','Time','Subject','Examination','Board','Duration'].forEach(h => {
+    tableHTML += '<th style="padding:12px 14px;text-align:left;font-weight:600;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;">' + h + '</th>';
+  });
+  tableHTML += '</tr></thead><tbody>';
+
+  let lastDate = '';
+  examTimetable.forEach(function(e, i) {
+    const c = etColors[e.subject] || { bg: '#f5f5f5', color: '#444', border: '#ddd' };
+    const examDate = parseExamDate(e.date);
+    const isPast = examDate < today;
+    const isToday = examDate.getTime() === today.getTime();
+    const isNewDate = e.date !== lastDate;
+    lastDate = e.date;
+
+    const rowBg = isToday ? 'var(--highlight-soft)' : (i % 2 === 0 ? 'white' : '#fafaf8');
+    const opacity = isPast ? '0.4' : '1';
+
+    const timeCell = e.coursework
+      ? '<span style="font-size:0.7rem;background:#f0f0f0;padding:2px 7px;border-radius:4px;color:#666;">Coursework</span>'
+      : e.time;
+
+    const dateCell = isNewDate ? (e.date + ' 2026') : '';
+    const dateWeight = isNewDate ? '600' : '400';
+    const dateColor = isNewDate ? 'var(--ink)' : 'transparent';
+
+    tableHTML += '<tr style="border-bottom:1px solid var(--border);opacity:' + opacity + ';background:' + rowBg + ';">';
+    tableHTML += '<td style="padding:10px 14px;font-weight:' + dateWeight + ';color:' + dateColor + ';white-space:nowrap;">' + dateCell + '</td>';
+    tableHTML += '<td style="padding:10px 14px;white-space:nowrap;">' + timeCell + '</td>';
+    tableHTML += '<td style="padding:10px 14px;"><span style="background:' + c.bg + ';color:' + c.color + ';border:1px solid ' + c.border + ';padding:3px 9px;border-radius:5px;font-size:0.75rem;font-weight:500;white-space:nowrap;">' + e.subject + '</span></td>';
+    tableHTML += '<td style="padding:10px 14px;color:var(--ink-light);font-size:0.78rem;">' + e.paper + '</td>';
+    tableHTML += '<td style="padding:10px 14px;font-size:0.75rem;color:var(--ink-light);">' + e.board + '</td>';
+    tableHTML += '<td style="padding:10px 14px;font-size:0.78rem;">' + (e.coursework ? '—' : (e.duration || '—')) + '</td>';
+    tableHTML += '</tr>';
+  });
+
+  tableHTML += '</tbody></table></div>';
+  tableHTML += '<p style="font-size:0.72rem;color:var(--ink-light);margin-top:12px;">* TBC times indicate coursework/portfolio submissions — confirm exact dates with school. Times marked TBC may change.</p>';
+
+  container.innerHTML = summaryHTML + tableHTML;
+}
+
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
